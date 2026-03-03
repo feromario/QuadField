@@ -1,21 +1,28 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Player {
-    private String name;
-    private Map<String, Troop> squad = new HashMap<>();
-    private int mult = 1;
 
+    // Class variables
+    private String name;
+    private ArrayList<Troop> squad;
+
+    // Constructor
     public Player(String name) {
         this.name = name;
-        squad.put("Tank", new Troop("Tank", 5));
-        squad.put("Warrior", new Troop("Warrior", 4));
-        squad.put("Mage", new Troop("Mage", 3));
-        squad.put("King", new Troop("King", 5));
+        squad.add(new Troop("Tank", 5));
+        squad.add(new Troop("Warrior", 4));
+        squad.add(new Troop("Mage", 3));
+        squad.add(new Troop("King", 5));
     }
 
-    public boolean isKingAlive() {
-        return squad.get("King").getIsAlive();
+    // Checks if the King troop is alive, to decide when game is over
+    public boolean isGameOver() {
+        if (!squad.get(3).isAlive()) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }

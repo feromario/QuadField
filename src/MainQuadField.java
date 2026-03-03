@@ -1,8 +1,11 @@
-
+import java.util.Scanner;
 
 public class MainQuadField {
 
-    // Static
+    // Creating instances
+    static Scanner scan = new Scanner(System.in);
+    static Player player1 = new Player("Player 1 enter name: " + scan.nextLine());
+    static Player player2 = new Player("Player 2 enter name: " + scan.nextLine());
 
     // Turn logic and game loop
     public static void gameLoop() {
@@ -24,7 +27,19 @@ public class MainQuadField {
         }
     }
 
+    // Game end method
+    public static boolean isGameOver() {
+
+        // Checks whether the game is over for either player to end game loop
+        if (player1.isGameOver() || player2.isGameOver())  {
+            return true;
+        } else  {
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
+
 
 
 
@@ -35,3 +50,6 @@ public class MainQuadField {
 
 
 }
+
+
+// TODO: work on deck class and on the game loop
