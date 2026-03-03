@@ -1,27 +1,24 @@
 public class Troop {
-    private String type;
+
+    // Class variables
+    private String name;
     private int health;
-    private boolean isAlive;
 
-    // GETTER
-    public boolean getIsAlive() {
-        return isAlive;
-    }
-
-    // SETTER
-    // public void setType(String newType) { this.type = newType; }
-
-    public Troop(String type, int health) {
-        this.type = type;
+    // Constructor
+    public Troop(String name, int health) {
+        this.name = name;
         this.health = health;
     }
 
+    // Checks if troop is alive, returns boolean
+    public boolean isAlive() {
+        return health > 0; // returns true if health is more than zero
+    }
+
+    // Method for the troop to take damage
     public void takeDamage(int damage) {
-        this.health -= damage;
-        if (this.health <= 0) {
-            this.health = 0;
-            this.isAlive = false;
-            System.out.println(type + " has fallen!");
-        }
+        // Math.max takes the larger of the two values
+        // in case the health goes into negatives
+        health = Math.max(0, health - damage);
     }
 }
