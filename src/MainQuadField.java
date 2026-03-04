@@ -52,6 +52,59 @@ public class MainQuadField {
                 System.out.println("Test 4");
             }
 
+            // Warrior cases
+            case "Slash" -> {
+                System.out.println("Test 1");
+            }
+            case "Swing" -> {
+                System.out.println("Test 2");
+            }
+            case "Inspire" -> {
+                System.out.println("Test 3");
+            }
+            case "Cleave" -> {
+                System.out.println("Test 4");
+            }
+
+            // Mage cases
+            case "Support" -> {
+                System.out.println("Test 1");
+            }
+            case "Fireball" -> {
+                System.out.println("Test 2");
+            }
+            case "Magic Blast" -> {
+                System.out.println("Test 3");
+            }
+            case "Thunder" -> {
+                System.out.println("Test 4");
+            }
+
+            // King cases
+            case "Jab" -> {
+                System.out.println("Test 1");
+            }
+            case "Hook" -> {
+                System.out.println("Test 2");
+            }
+            case "Straight" -> {
+                System.out.println("Test 3");
+            }
+
+            // Special cases
+            case "Revive Tank" -> {
+                System.out.println("Test 1");
+            }
+            case "Revive Warrior" -> {
+                System.out.println("Test 2");
+            }
+            case "Revive Mage" -> {
+                System.out.println("Test 3");
+            }
+            case "Joker" -> {
+                System.out.println("Test 4");
+            }
+
         }
 
         // Pause before next turn
@@ -93,4 +146,4 @@ public class MainQuadField {
 }
 
 
-// TODO: 1. add all the cards 2. work on CardEffects class 3. display results better
+// TODO: 2. work on CardEffects class 3. display results better
