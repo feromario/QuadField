@@ -21,4 +21,5 @@ public class Troop {
         // in case the health goes into negatives
         health = Math.max(0, health - damage);
     }
+
 }
