@@ -1,7 +1,7 @@
 public class Card {
 
     // Class variables
-    private String name;
+    public String name;
     private String effect;
 
     // Constructor

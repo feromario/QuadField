@@ -16,17 +16,43 @@ public class MainQuadField {
 
         // Runs while isGamesOver is false
         while (!isGameOver()) {
-            // if true, player 1 executes turn, else player 2
+            // If true, player 1 executes turn, else player 2
             if (isPlayer1Turn) {
-                // p1 takes turn
-                Card drawn = deck.draw();
+                takeTurn(player1, player2);
             } else {
-                // p2 takes turn
+                takeTurn(player2, player1);
             }
 
             // Switches boolean value, to switch turns
             isPlayer1Turn = !isPlayer1Turn;
         }
+        System.out.println("Game Over");
+    }
+
+    // What happens in a turn, helper method
+    public static void takeTurn(Player attacker, Player defender) {
+        Card drawn = deck.draw();
+        System.out.println(attacker.name + " drew: " + drawn.name);
+
+        // Switch statement to check for card
+        switch (drawn.name) {
+            // Using arrow syntax instead of the break syntax
+            // Tank cases
+            case "Dash" -> {
+                System.out.println("Test 1");
+            }
+            case "Heal" -> {
+                System.out.println("Test 2");
+            }
+            case "Necromancer" -> {
+                System.out.println("Test 3");
+            }
+            case "Life Steal" -> {
+                System.out.println("Test 4");
+            }
+
+        }
+
     }
 
     // Game end method
@@ -44,13 +70,16 @@ public class MainQuadField {
     public static void main(String[] args) {
 
         // Get player names
-        player1 = new Player("Player 1 enter name: " + scan.nextLine());
-        player2 = new Player("Player 2 enter name: " + scan.nextLine());
+        System.out.println("Enter name of player 1: ");
+        player1 = new Player(scan.nextLine());
+        System.out.println("Enter name of player 2: ");
+        player2 = new Player(scan.nextLine());
 
         // Shuffle deck to start game
         deck.shuffle();
 
-
+        // Start game loop
+        gameLoop();
 
 
 

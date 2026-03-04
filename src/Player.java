@@ -3,12 +3,13 @@ import java.util.ArrayList;
 public class Player {
 
     // Class variables
-    private String name;
+    public String name;
     private ArrayList<Troop> squad;
 
     // Constructor
     public Player(String name) {
         this.name = name;
+        this.squad = new ArrayList<>();
         squad.add(new Troop("Tank", 5));
         squad.add(new Troop("Warrior", 4));
         squad.add(new Troop("Mage", 3));
