@@ -55,7 +55,7 @@ Deal 4 dmg.
 
 
 **Mage cards**
-- Heal (4 cards)  
+- Support (4 cards)  
 Heal 1 hp to the first friendly troop in line (excluding itself).
 - Fireball (4 cards)  
 Deal 1 dmg to 2nd in line (if only King left, damage King instead).
