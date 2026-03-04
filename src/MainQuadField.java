@@ -4,8 +4,9 @@ public class MainQuadField {
 
     // Creating instances
     static Scanner scan = new Scanner(System.in);
-    static Player player1 = new Player("Player 1 enter name: " + scan.nextLine());
-    static Player player2 = new Player("Player 2 enter name: " + scan.nextLine());
+    static Player player1;
+    static Player player2;
+    static Deck deck = new Deck();
 
     // Turn logic and game loop
     public static void gameLoop() {
@@ -18,6 +19,7 @@ public class MainQuadField {
             // if true, player 1 executes turn, else player 2
             if (isPlayer1Turn) {
                 // p1 takes turn
+                Card drawn = deck.draw();
             } else {
                 // p2 takes turn
             }
@@ -38,16 +40,21 @@ public class MainQuadField {
         }
     }
 
+    // Main method
     public static void main(String[] args) {
 
+        // Get player names
+        player1 = new Player("Player 1 enter name: " + scan.nextLine());
+        player2 = new Player("Player 2 enter name: " + scan.nextLine());
 
+        // Shuffle deck to start game
+        deck.shuffle();
 
 
 
 
 
     }
-
 
 }
 

@@ -1,4 +1,3 @@
-import javax.smartcardio.Card;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -9,7 +8,7 @@ public class Deck {
 
     // Constructor
     public Deck() {
-        cards = new ArrayList<Card>();
+        cards = new ArrayList<>();
     }
 
     // Shuffle deck
@@ -19,7 +18,7 @@ public class Deck {
 
     // Drawing a card, removes top element from array list
     public Card draw() {
-        return cards.removeFirst();
+        return cards.remove(0);
     }
 
     // Checks if array list is empty
