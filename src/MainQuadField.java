@@ -40,6 +40,7 @@ public class MainQuadField {
             // Tank cases
             case "Dash" -> {
                 System.out.println("Test 1");
+                // CardEffects.dash(attacker, defender);
             }
             case "Heal" -> {
                 System.out.println("Test 2");
@@ -52,6 +53,10 @@ public class MainQuadField {
             }
 
         }
+
+        // Pause before next turn
+        System.out.println("Press enter for " + defender.name + "'s turn...");
+        scan.nextLine();
 
     }
 
@@ -88,4 +93,4 @@ public class MainQuadField {
 }
 
 
-// TODO: work on deck class and on the game loop
+// TODO: 1. add all the cards 2. work on CardEffects class 3. display results better
