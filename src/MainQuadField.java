@@ -38,10 +38,7 @@ public class MainQuadField {
         switch (drawn.name) {
             // Using arrow syntax instead of the break syntax
             // Tank cases
-            case "Dash" -> {
-                System.out.println("Test 1");
-                // CardEffects.dash(attacker, defender);
-            }
+            case "Dash" -> CardEffects.dash(attacker, defender);
             case "Heal" -> {
                 System.out.println("Test 2");
             }
@@ -53,18 +50,14 @@ public class MainQuadField {
             }
 
             // Warrior cases
-            case "Slash" -> {
-                System.out.println("Test 1");
-            }
+            case "Slash" -> CardEffects.slash(attacker, defender);
             case "Swing" -> {
                 System.out.println("Test 2");
             }
             case "Inspire" -> {
                 System.out.println("Test 3");
             }
-            case "Cleave" -> {
-                System.out.println("Test 4");
-            }
+            case "Cleave" -> CardEffects.cleave(attacker, defender);
 
             // Mage cases
             case "Support" -> {
@@ -73,23 +66,13 @@ public class MainQuadField {
             case "Fireball" -> {
                 System.out.println("Test 2");
             }
-            case "Magic Blast" -> {
-                System.out.println("Test 3");
-            }
-            case "Thunder" -> {
-                System.out.println("Test 4");
-            }
+            case "Magic Blast" -> CardEffects.magicBlast(attacker, defender);
+            case "Thunder" -> CardEffects.thunder(attacker, defender);
 
             // King cases
-            case "Jab" -> {
-                System.out.println("Test 1");
-            }
-            case "Hook" -> {
-                System.out.println("Test 2");
-            }
-            case "Straight" -> {
-                System.out.println("Test 3");
-            }
+            case "Jab" -> CardEffects.jab(attacker, defender);
+            case "Hook" -> CardEffects.hook(attacker, defender);
+            case "Straight" -> CardEffects.straight(attacker, defender);
 
             // Special cases
             case "Revive Tank" -> {

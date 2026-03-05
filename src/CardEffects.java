@@ -1,4 +1,5 @@
 public class CardEffects {
+    private static final int MAX_HEALTH = 5;
 
     // Deal damage to first enemy in line (helper)
     private static void damageFirstInLine(Player defender, int dmg) {
@@ -15,6 +16,17 @@ public class CardEffects {
     public static void dash(Player attacker, Player defender) {
         System.out.println("Dash! 1 dmg");
         damageFirstInLine(defender, 1);
+    }
+
+    public static void heal(Player attacker, Player defender) {
+        System.out.println("Heal! restore 1 hp to itself");
+        for (Troop t : attacker.squad) {
+            if (t.name.equals("Tank") && t.isAlive()) {
+                t.health = Math.min(MAX_HEALTH, t.health + 1);
+                System.out.println("Tank HP: " + t.health);
+                return;
+            }
+        }
     }
 
     // Warrior
@@ -42,6 +54,18 @@ public class CardEffects {
                 System.out.println(t.name + " took " + 1 + " damage! HP: " + t.health);
             }
         }
+    }
+
+    public static void support(Player attacker, Player defender) {
+        System.out.println("Support! heal 1 hp to a troop");
+        for (Troop t : attacker.squad) {
+            if (t.isAlive() && !t.name.equals("Mage")) {
+                t.health = Math.min(MAX_HEALTH, t.health + 1);
+                System.out.println(t.name + " was healed! HP: " + t.health);
+                return;
+            }
+        }
+        System.out.println("No troop to heal!");
     }
 
     // King
