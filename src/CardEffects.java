@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class CardEffects {
     private static final int MAX_HEALTH = 5;
 
@@ -34,9 +36,7 @@ public class CardEffects {
 
             // Mage cases
             case "Support" -> support(attacker, defender);
-            case "Fireball" -> {
-                System.out.println("Test 2");
-            }
+            case "Fireball" -> fireball(attacker, defender);
             case "Magic Blast" -> magicBlast(attacker, defender);
             case "Thunder" -> thunder(attacker, defender);
 
@@ -142,6 +142,29 @@ public class CardEffects {
             }
         }
         System.out.println("No troop to heal!");
+    }
+
+    public static void fireball(Player attacker, Player defender) {
+        System.out.println("Fireball! 1 dmg to second enemy in line");
+
+        // collecting list of all alive troop currently
+        ArrayList<Troop> aliveTroops = new ArrayList<>();
+        for (Troop t : defender.squad) {
+            if (t.isAlive()) {
+                aliveTroops.add(t);
+            }
+        }
+
+        if (aliveTroops.size() >= 2) { // checks if there are more than 2 troops
+            aliveTroops.get(1).takeDamage(1);
+            System.out.println(aliveTroops.get(1).name + " took 1 damage! HP: " + aliveTroops.get(1).health);
+
+        } else if (aliveTroops.size() == 1) { // only king left
+            aliveTroops.get(0).takeDamage(1);
+            System.out.println(aliveTroops.get(0).name + " took 1 damage! HP: " + aliveTroops.get(0).health);
+        } else {
+            System.out.println("No troops left!");
+        }
     }
 
     // King
