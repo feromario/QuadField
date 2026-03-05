@@ -33,62 +33,7 @@ public class MainQuadField {
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
         System.out.println(attacker.name + " drew: " + drawn.name);
-
-        // Switch statement to check for card
-        switch (drawn.name) {
-            // Using arrow syntax instead of the break syntax
-            // Tank cases
-            case "Dash" -> CardEffects.dash(attacker, defender);
-            case "Heal" -> {
-                System.out.println("Test 2");
-            }
-            case "Necromancer" -> {
-                System.out.println("Test 3");
-            }
-            case "Life Steal" -> {
-                System.out.println("Test 4");
-            }
-
-            // Warrior cases
-            case "Slash" -> CardEffects.slash(attacker, defender);
-            case "Swing" -> {
-                System.out.println("Test 2");
-            }
-            case "Inspire" -> {
-                System.out.println("Test 3");
-            }
-            case "Cleave" -> CardEffects.cleave(attacker, defender);
-
-            // Mage cases
-            case "Support" -> {
-                System.out.println("Test 1");
-            }
-            case "Fireball" -> {
-                System.out.println("Test 2");
-            }
-            case "Magic Blast" -> CardEffects.magicBlast(attacker, defender);
-            case "Thunder" -> CardEffects.thunder(attacker, defender);
-
-            // King cases
-            case "Jab" -> CardEffects.jab(attacker, defender);
-            case "Hook" -> CardEffects.hook(attacker, defender);
-            case "Straight" -> CardEffects.straight(attacker, defender);
-
-            // Special cases
-            case "Revive Tank" -> {
-                System.out.println("Test 1");
-            }
-            case "Revive Warrior" -> {
-                System.out.println("Test 2");
-            }
-            case "Revive Mage" -> {
-                System.out.println("Test 3");
-            }
-            case "Joker" -> {
-                System.out.println("Test 4");
-            }
-
-        }
+        CardEffects.applyEffect(drawn, attacker, defender);
 
         // Pause before next turn
         System.out.println("Press enter for " + defender.name + "'s turn...");

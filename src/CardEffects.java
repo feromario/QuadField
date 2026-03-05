@@ -12,6 +12,55 @@ public class CardEffects {
         }
     }
 
+    // Contains switch statement for cards drawn
+    public static void applyEffect(Card drawn, Player attacker, Player defender) {
+        switch (drawn.name) {
+            // Using arrow syntax instead of the break syntax
+            // Tank cases
+            case "Dash" -> dash(attacker, defender);
+            case "Heal" -> heal(attacker, defender);
+            case "Necromancer" -> {
+                System.out.println("Test 3");
+            }
+            case "Life Steal" -> {
+                System.out.println("Test 4");
+            }
+
+            // Warrior cases
+            case "Slash" -> slash(attacker, defender);
+            case "Swing" -> swing(attacker, defender);
+            case "Inspire" -> inspire(attacker, defender);
+            case "Cleave" -> cleave(attacker, defender);
+
+            // Mage cases
+            case "Support" -> support(attacker, defender);
+            case "Fireball" -> {
+                System.out.println("Test 2");
+            }
+            case "Magic Blast" -> magicBlast(attacker, defender);
+            case "Thunder" -> thunder(attacker, defender);
+
+            // King cases
+            case "Jab" -> jab(attacker, defender);
+            case "Hook" -> hook(attacker, defender);
+            case "Straight" -> straight(attacker, defender);
+
+            // Special cases
+            case "Revive Tank" -> {
+                System.out.println("Test 1");
+            }
+            case "Revive Warrior" -> {
+                System.out.println("Test 2");
+            }
+            case "Revive Mage" -> {
+                System.out.println("Test 3");
+            }
+            case "Joker" -> {
+                System.out.println("Test 4");
+            }
+        }
+    }
+
     // Tank
     public static void dash(Player attacker, Player defender) {
         System.out.println("Dash! 1 dmg");
@@ -38,6 +87,33 @@ public class CardEffects {
     public static void cleave(Player attacker, Player defender) {
         System.out.println("Cleave! 2 dmg");
         damageFirstInLine(defender, 4);
+    }
+
+    public static void swing(Player attacker, Player defender) {
+        System.out.println("Swing! 1 dmg to first 2 enemies in line");
+        int hits = 0; // to count 2 hits
+        for (Troop t : defender.squad) {
+            if (t.isAlive()) {
+                t.takeDamage(1);
+                System.out.println(t.name + " took 1 damage! HP: " + t.health);
+                hits++;
+                if (hits >= 2) {return;} // stops after hitting 2 troops
+            }
+        }
+    }
+
+    public static void inspire(Player attacker, Player defender) {
+        System.out.println("Inspire! draw 2");
+        for (int i = 0; i < 2; i++) {
+            if (!MainQuadField.deck.isEmpty()) {
+                Card drawn = MainQuadField.deck.draw();
+                System.out.println(attacker.name + " drew " + drawn.name);
+                applyEffect(drawn, attacker, defender); // applies card after draw
+            } else {
+                System.out.println("Deck is empty!");
+                break;
+            }
+        }
     }
 
     // Mage
