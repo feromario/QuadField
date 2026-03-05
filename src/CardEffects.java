@@ -14,6 +14,16 @@ public class CardEffects {
         }
     }
 
+    // checks if a troop is alive (helper)
+    private static boolean isTroopAlive(Player player, String troopName) {
+        for (Troop t : player.squad) {
+            if (t.name.equals(troopName) && t.isAlive()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Contains switch statement for cards drawn
     public static void applyEffect(Card drawn, Player attacker, Player defender) {
         switch (drawn.name) {
@@ -24,9 +34,7 @@ public class CardEffects {
             case "Necromancer" -> {
                 System.out.println("Test 3");
             }
-            case "Life Steal" -> {
-                System.out.println("Test 4");
-            }
+            case "Life Steal" -> lifeSteal(attacker, defender);
 
             // Warrior cases
             case "Slash" -> slash(attacker, defender);
@@ -63,6 +71,12 @@ public class CardEffects {
 
     // Tank
     public static void dash(Player attacker, Player defender) {
+        // check, add for all methods later
+        if (!isTroopAlive(attacker, "Tank")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Dash! 1 dmg");
         damageFirstInLine(defender, 1);
     }
