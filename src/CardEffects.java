@@ -67,9 +67,9 @@ public class CardEffects {
         }
     }
 
-    // Tank
+    // ─────────────── TANK ─────────────────────────────────────────────────────────────────────
     public static void dash(Player attacker, Player defender) {
-        // check, add for all methods later
+        // check
         if (!isTroopAlive(attacker, "Tank")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
@@ -80,6 +80,12 @@ public class CardEffects {
     }
 
     public static void heal(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Tank")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Heal! restore 1 hp to itself");
         for (Troop t : attacker.squad) {
             if (t.name.equals("Tank") && t.isAlive()) {
@@ -91,6 +97,12 @@ public class CardEffects {
     }
 
     public static void lifeSteal(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Tank")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Life Steal! steal 1hp from enemy");
 
         // find the first alive enemy troop
@@ -125,6 +137,11 @@ public class CardEffects {
     }
 
     public static void necromancer(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Tank")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
         // effect
         System.out.println("Necromancer! spawns foot soldier");
         Troop soldier = new Troop("Soldier", 1);
@@ -139,18 +156,36 @@ public class CardEffects {
         }
     }
 
-    // Warrior
+    // ─────────────── WARRIOR ─────────────────────────────────────────────────────────────────────
     public static void slash(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Warrior")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Slash! 2 dmg");
         damageFirstInLine(defender, 2);
     }
 
     public static void cleave(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Warrior")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Cleave! 2 dmg");
         damageFirstInLine(defender, 4);
     }
 
     public static void swing(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Warrior")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Swing! 1 dmg to first 2 enemies in line");
         int hits = 0; // to count 2 hits
         for (Troop t : defender.squad) {
@@ -164,6 +199,12 @@ public class CardEffects {
     }
 
     public static void inspire(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Warrior")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Inspire! draw 2");
         for (int i = 0; i < 2; i++) {
             if (!MainQuadField.deck.isEmpty()) {
@@ -177,13 +218,25 @@ public class CardEffects {
         }
     }
 
-    // Mage
+    // ─────────────── MAGE ─────────────────────────────────────────────────────────────────────
     public static void magicBlast(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Mage")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Magic Blast! 2 dmg");
         damageFirstInLine(defender, 3);
     }
 
     public static void thunder(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Mage")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Thunder! 1 dmg to every troop");
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
@@ -194,6 +247,12 @@ public class CardEffects {
     }
 
     public static void support(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Mage")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Support! heal 1 hp to a troop");
         for (Troop t : attacker.squad) {
             if (t.isAlive() && !t.name.equals("Mage")) {
@@ -206,6 +265,12 @@ public class CardEffects {
     }
 
     public static void fireball(Player attacker, Player defender) {
+        // check
+        if (!isTroopAlive(attacker, "Mage")) {
+            System.out.println("Troop is dead, turn skipped!");
+            return;
+        }
+        // effect
         System.out.println("Fireball! 1 dmg to second enemy in line");
 
         // collecting list of all alive troop currently
@@ -228,7 +293,7 @@ public class CardEffects {
         }
     }
 
-    // King
+    // ─────────────── KING ─────────────────────────────────────────────────────────────────────
     public static void jab(Player attacker, Player defender) {
         System.out.println("Jab! 1 dmg");
         damageFirstInLine(defender, 1);
@@ -243,4 +308,46 @@ public class CardEffects {
         System.out.println("Straight! 3 dmg");
         damageFirstInLine(defender, 3);
     }
+
+    // ─────────────── SPECIAL ─────────────────────────────────────────────────────────────────────
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
