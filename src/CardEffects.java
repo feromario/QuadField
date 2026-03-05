@@ -78,6 +78,40 @@ public class CardEffects {
         }
     }
 
+    public static void lifeSteal(Player attacker, Player defender) {
+        System.out.println("Life Steal! steal 1hp from enemy");
+
+        // find the first alive enemy troop
+        Troop target = null;
+        for (Troop t : defender.squad) {
+            if (t.isAlive()) {
+                target = t;
+                break;
+            }
+        }
+
+        // find the friendly tank
+        Troop tank = null;
+        for (Troop t : attacker.squad) {
+            if (t.name.equals("Tank") && t.isAlive()) {
+                tank = t;
+                break;
+            }
+        }
+
+        // steal the 1 hp
+        if (target != null && tank != null) {
+            target.takeDamage(1);
+            tank.health = Math.min(MAX_HEALTH, tank.health + 1);
+            System.out.println(target.name + " lost 1 HP! HP: " + target.health);
+            System.out.println("Tank gained 1 HP! HP: " + tank.health);
+        } else if (target == null) {
+            System.out.println("No enemy troops!");
+        } else {
+            System.out.println("Tank is dead, cannot heal!");
+        }
+    }
+
     // Warrior
     public static void slash(Player attacker, Player defender) {
         System.out.println("Slash! 2 dmg");
