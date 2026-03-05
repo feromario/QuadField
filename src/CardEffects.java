@@ -28,5 +28,19 @@ public class CardEffects {
         damageFirstInLine(defender, 4);
     }
 
+    // Mage
+    public static void magicBlast(Player attacker, Player defender) {
+        System.out.println("Magic Blast! 2 dmg");
+        damageFirstInLine(defender, 3);
+    }
 
+    public static void thunder(Player attacker, Player defender) {
+        System.out.println("Thunder! 1 dmg to every troop");
+        for (Troop t : defender.squad) {
+            if (t.isAlive()) {
+                t.takeDamage(1);
+                System.out.println(t.name + " took " + 1 + " damage! HP: " + t.health);
+            }
+        }
+    }
 }
