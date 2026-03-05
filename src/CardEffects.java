@@ -31,9 +31,7 @@ public class CardEffects {
             // Tank cases
             case "Dash" -> dash(attacker, defender);
             case "Heal" -> heal(attacker, defender);
-            case "Necromancer" -> {
-                System.out.println("Test 3");
-            }
+            case "Necromancer" -> necromancer(attacker, defender);
             case "Life Steal" -> lifeSteal(attacker, defender);
 
             // Warrior cases
@@ -123,6 +121,21 @@ public class CardEffects {
             System.out.println("No enemy troops!");
         } else {
             System.out.println("Tank is dead, cannot heal!");
+        }
+    }
+
+    public static void necromancer(Player attacker, Player defender) {
+        // effect
+        System.out.println("Necromancer! spawns foot soldier");
+        Troop soldier = new Troop("Soldier", 1);
+
+        // find index of Tank and insert Soldier in front
+        for (int i = 0; i < attacker.squad.size(); i++) {
+            if (attacker.squad.get(i).name.equals("Tank") && attacker.squad.get(i).isAlive()) {
+                attacker.squad.add(i, soldier); // shifts index to the right
+                System.out.println("A soldier with 1 hp gets in front!");
+                return;
+            }
         }
     }
 
