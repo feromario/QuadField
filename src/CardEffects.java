@@ -55,9 +55,7 @@ public class CardEffects {
             case "Tank Revive" -> revive(drawn, attacker, defender);
             case "Warrior Revive" -> revive(drawn, attacker, defender);
             case "Mage Revive" -> revive(drawn, attacker, defender);
-            case "Joker" -> {
-                System.out.println("Test 4");
-            }
+            case "Joker" -> joker(attacker, defender);
         }
     }
 
@@ -363,6 +361,12 @@ public class CardEffects {
         }
     }
 
+    // currently same as Dash, subject to change
+    public static void joker(Player attacker, Player defender) {
+        // effect
+        System.out.println("Dash! 1 dmg");
+        damageFirstInLine(defender, 1);
+    }
 
 
 

@@ -29,11 +29,31 @@ public class MainQuadField {
         System.out.println("Game Over");
     }
 
+    // Display
+    public static void printStatus() {
+        System.out.println("─".repeat(30));
+        for (int i = 0; i < 2; i++) {
+            Player p = i == 0 ? player1 : player2;
+            System.out.println(p.name + "'s squad:");
+            for (Troop t : p.squad) {
+                if (t.isAlive()) {
+                    System.out.println("   " + t.name + " -> " + t.health + " health.");
+                } else {
+                    System.out.println("   " + t.name + " is dead.");
+                }
+            }
+            System.out.println("─".repeat(30));
+        }
+    }
+
     // What happens in a turn, helper method
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
         System.out.println(attacker.name + " drew: " + drawn.name);
         CardEffects.applyEffect(drawn, attacker, defender);
+
+        // Display after each turn
+        printStatus();
 
         // Pause before next turn
         System.out.println("Press enter for " + defender.name + "'s turn...");
@@ -74,4 +94,4 @@ public class MainQuadField {
 }
 
 
-// TODO: 2. work on CardEffects class 3. display results better
+// TODO: joker method, improve display again, test gameplay, gui, executable
