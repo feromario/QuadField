@@ -43,4 +43,20 @@ public class CardEffects {
             }
         }
     }
+
+    // King
+    public static void jab(Player attacker, Player defender) {
+        System.out.println("Jab! 1 dmg");
+        damageFirstInLine(defender, 1);
+    }
+
+    public static void hook(Player attacker, Player defender) {
+        System.out.println("Hook! 2 dmg");
+        damageFirstInLine(defender, 2);
+    }
+
+    public static void straight(Player attacker, Player defender) {
+        System.out.println("Straight! 3 dmg");
+        damageFirstInLine(defender, 3);
+    }
 }
