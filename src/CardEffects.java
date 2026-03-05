@@ -16,4 +16,17 @@ public class CardEffects {
         System.out.println("Dash! 1 dmg");
         damageFirstInLine(defender, 1);
     }
+
+    // Warrior
+    public static void slash(Player attacker, Player defender) {
+        System.out.println("Slash! 2 dmg");
+        damageFirstInLine(defender, 2);
+    }
+
+    public static void cleave(Player attacker, Player defender) {
+        System.out.println("Cleave! 2 dmg");
+        damageFirstInLine(defender, 4);
+    }
+
+
 }
