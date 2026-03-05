@@ -52,15 +52,9 @@ public class CardEffects {
             case "Straight" -> straight(attacker, defender);
 
             // Special cases
-            case "Revive Tank" -> {
-                System.out.println("Test 1");
-            }
-            case "Revive Warrior" -> {
-                System.out.println("Test 2");
-            }
-            case "Revive Mage" -> {
-                System.out.println("Test 3");
-            }
+            case "Tank Revive" -> revive(drawn, attacker, defender);
+            case "Warrior Revive" -> revive(drawn, attacker, defender);
+            case "Mage Revive" -> revive(drawn, attacker, defender);
             case "Joker" -> {
                 System.out.println("Test 4");
             }
@@ -310,6 +304,68 @@ public class CardEffects {
     }
 
     // ─────────────── SPECIAL ─────────────────────────────────────────────────────────────────────
+    public static void revive(Card drawn, Player attacker, Player defender) {
+        // save the card to player's hand
+        attacker.hand.add(drawn);
+        System.out.println(attacker.name + " drew " + drawn.name);
+
+        // count how many of this revive type the player has
+        int count = 0;
+        for (Card c : attacker.hand) {
+            if (c.name.equals(drawn.name)) {
+                count++;
+            }
+        }
+        System.out.println(attacker.name + " has " + count + " " + drawn.name);
+
+        // check if player has at least 3 revives of the same type
+        if (count >= 3) {
+            // which troop the revive belongs too
+            String troopName = drawn.name.replace(" Revive", "");
+
+            // only revive if that troop is dead
+            if (!isTroopAlive(attacker, troopName)) {
+                System.out.println("Revive " + troopName + "? y/n");
+                String input = MainQuadField.scan.nextLine();
+
+                if (input.equals("y")) {
+                    // remove those 3 cards
+                    int removed = 0;
+                    for (int i = attacker.hand.size() - 1; i >= 0 && removed < 3; i--) {
+                        if (attacker.hand.get(i).name.equals(drawn.name)) {
+                            attacker.hand.remove(i);
+                            removed++;
+                        }
+                    }
+                    // revive the troop
+                    for (Troop t : attacker.squad) {
+                        if (t.name.equals(troopName)) {
+                            // decides what health to give each troop, hardcoded
+                            if (troopName.equals("Tank")) {
+                                t.health = 5;
+                            } else if (troopName.equals("Warrior")) {
+                                t.health = 4;
+                            } else if (troopName.equals("Mage")) {
+                                t.health = 3;
+                            }
+
+                            System.out.println(troopName + " revived!");
+                            return;
+                        }
+                    }
+
+                } else {
+                    System.out.println("Not enough. Cards saved for later.");
+                }
+            } else {
+                System.out.println(troopName + " is alive. Cards saved for later.");
+            }
+        }
+    }
+
+
+
+
 }
 
 

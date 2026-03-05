@@ -33,9 +33,9 @@ public class Deck {
         addCard("Straight", "Deal 3 DMG", 1);
 
         // Special cards
-        addCard("Revive Tank", "Revive", 4);
-        addCard("Revive Warrior", "Revive", 4);
-        addCard("Revive Mage", "Revive", 4);
+        addCard("Tank Revive", "Revive the Tank", 4);
+        addCard("Warrior Revive", "Revive the Warrior", 4);
+        addCard("Mage Revive", "Revive the Mage", 4);
         addCard("Joker", "Double effect of next card", 2);
 
     }
