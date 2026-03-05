@@ -4,7 +4,7 @@ public class Player {
 
     // Class variables
     public String name;
-    private ArrayList<Troop> squad;
+    public ArrayList<Troop> squad;
 
     // Constructor
     public Player(String name) {

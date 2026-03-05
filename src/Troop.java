@@ -1,8 +1,8 @@
 public class Troop {
 
     // Class variables
-    private String name;
-    private int health;
+    public String name;
+    public int health;
 
     // Constructor
     public Troop(String name, int health) {
