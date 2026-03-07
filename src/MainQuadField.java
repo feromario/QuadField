@@ -61,8 +61,35 @@ public class MainQuadField {
 
     }
 
+    // calculate hp differential at the end of the game
+    public static int calcHPD(Player winner, Player loser) {
+        int winnerHP = 0;
+        int loserHP = 0;
+
+        for (Troop t : winner.squad) {
+            winnerHP += t.health;
+        }
+
+        for (Troop t : loser.squad) {
+            loserHP  += t.health;
+        }
+
+        int HPD = winnerHP - loserHP;
+        return HPD;
+    }
+
     // Game end method
     public static boolean isGameOver() {
+        // shows winner and hpd
+        if (player1.isGameOver()) {
+            int HPD = calcHPD(player2, player1);
+            System.out.println(player2.name + " wins.");
+            System.out.println("HPD: " + HPD);
+        } else if (player2.isGameOver()) {
+            int HPD = calcHPD(player1, player2);
+            System.out.println(player1.name + " wins.");
+            System.out.println("HPD: " + HPD);
+        }
 
         // Checks whether the game is over for either player to end game loop
         if (player1.isGameOver() || player2.isGameOver())  {
