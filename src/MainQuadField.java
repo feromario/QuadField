@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.BorderLayout;
 
@@ -15,6 +17,7 @@ public class MainQuadField {
     static Scanner scan = new Scanner(System.in);
     static Player player1;
     static Player player2;
+    static JTextArea battleLog = new JTextArea();
     static Deck deck = new Deck();
 
     // Turn logic and game loop
@@ -216,7 +219,14 @@ public class MainQuadField {
         player2Panel.add(p2WarriorRevive);
         player2Panel.add(p2MageRevive);
 
-        gamePanel.add(player2Panel, BorderLayout.WEST);
+        gamePanel.add(player2Panel, BorderLayout.EAST);
+
+        // CENTER Section - battle log
+        battleLog.setEditable(false); // not editable
+        battleLog.setLineWrap(true); // wraps around if line is too long
+
+        JScrollPane scrollPane = new JScrollPane(battleLog);
+        gamePanel.add(scrollPane, BorderLayout.CENTER);
 
 
         // Start button, getting names and creating game board
