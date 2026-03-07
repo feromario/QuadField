@@ -121,4 +121,4 @@ public class MainQuadField {
 }
 
 
-// TODO: improve display again, test gameplay, gui, executable
+// TODO: gui, executable
