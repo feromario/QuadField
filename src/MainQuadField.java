@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import javax.swing.JFrame;
 
 public class MainQuadField {
 
@@ -99,8 +100,26 @@ public class MainQuadField {
         }
     }
 
+    // ----- SWING GUI ----------------------------------------------------------------------------
+    // JFrame - main window
+    // JPanel - container that holds other components
+    // JLabel - displays text
+    // JButton - a clickable button
+    // JTextField - text input box
+
+
+
+    // --------------------------------------------------------------------------------------------
+
     // Main method
     public static void main(String[] args) {
+
+        // ----- SWING GUI ------------------------------------------------------------------------
+        JFrame frame = new JFrame("Quad Field");
+        frame.setSize(800, 600); // width x height
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close program with window
+        frame.setVisible(true); // shows window
+        // ----------------------------------------------------------------------------------------
 
         // Get player names
         System.out.println("Enter name of player 1: ");
