@@ -6,6 +6,7 @@ public class Player {
     public String name;
     public ArrayList<Troop> squad;
     public ArrayList<Card> hand = new ArrayList<>();
+    public boolean jokerActive = false;
 
     // Constructor
     public Player(String name) {

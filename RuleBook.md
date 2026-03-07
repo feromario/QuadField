@@ -1,7 +1,7 @@
 # Setup
 *  Autonomous 1v1 PvP  
 *  Each player has 4 troops: Tank, Warrior, Mage, King.  
-*  Players take turns drawing cards from a deck of 54 cards.  
+*  Players take turns drawing cards from a deck of 108 cards.  
 *  Who goes first is decided by format or coin flip.
 ---
 # General rules
@@ -24,53 +24,54 @@ King (K) // 5 HP
 _(number of cards in a deck and their abilities subject to change)_
 
 **Special cards**  
-- Revive X (12 cards)  
+- Revive X (24 cards)  
 4 cards for each troop, excluding King, need 3 of the same troop to revive that troop.  
 Can be saved for later use if the troop is still alive.
 
-- Joker (2 cards)  
-Doubles the effect of the next card, player draws again
+- Joker (4 cards)  
+Doubles the effect of the next card, player draws again  
+Not applicable to another joker or revive card
 
 
 **Tank cards**  
-- Dash (4 cards)  
+- Dash (8 cards)  
 Deal 1 dmg.
-- Heal (4 cards)  
+- Heal (8 cards)  
 Heal itself 1 hp.
-- Necromancer (2 cards)  
+- Necromancer (4 cards)  
 Spawn a 1 hp foot solider who gets first in line.
-- Life Steal (1 card)  
+- Life Steal (2 card)  
 Steal 1 hp from enemy troop first in line.
 
 
 **Warrior cards**
-- Slash (4 cards)  
+- Slash (8 cards)  
 Deal 2 dmg.
-- Swing (4 cards)  
+- Swing (8 cards)  
 Deal 1 dmg each to the first two in line.
-- Inspire (2 cards)  
+- Inspire (4 cards)  
 Draw 2 cards.
-- Cleave (1 card)  
+- Cleave (2 card)  
 Deal 4 dmg.
 
 
 **Mage cards**
-- Support (4 cards)  
+- Support (8 cards)  
 Heal 1 hp to the first friendly troop in line (excluding itself).
-- Fireball (4 cards)  
+- Fireball (8 cards)  
 Deal 1 dmg to 2nd in line (if only King left, damage King instead).
-- Magic Blast (2 cards)  
+- Magic Blast (4 cards)  
 Deal 3 dmg.
-- Thunder (1 card)  
+- Thunder (2 card)  
 Deal 1 dmg each to every enemy troop.
 
 
 **King cards**
-- Jab (4 cards)  
+- Jab (8 cards)  
 Deal 1 dmg.
-- Hook (2 cards)  
+- Hook (4 cards)  
 Deal 2 dmg.
-- Straight (1 card)  
+- Straight (2 card)  
 Deal 3 dmg.
 ---
 

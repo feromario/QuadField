@@ -24,71 +24,89 @@ public class CardEffects {
         return false;
     }
 
+    // joker card
+    public static void joker(Player attacker, Player defender) {
+        System.out.println("Joker! next card effect doubled");
+        attacker.jokerActive = true;
+        Card drawn = MainQuadField.deck.draw();
+        System.out.println("Drawn Card: " + drawn.name);
+        applyEffect(drawn, attacker, defender);
+    }
+
     // Contains switch statement for cards drawn
     public static void applyEffect(Card drawn, Player attacker, Player defender) {
+        // check for joker
+        if (drawn.name.equals("Joker")) {
+            joker(attacker, defender);
+            return;
+        }
+        int mult = attacker.jokerActive ? 2 : 1;
+        attacker.jokerActive = false; // reset after every card draw
+
+        // switch to card
         switch (drawn.name) {
             // Using arrow syntax instead of the break syntax
             // Tank cases
-            case "Dash" -> dash(attacker, defender);
-            case "Heal" -> heal(attacker, defender);
-            case "Necromancer" -> necromancer(attacker, defender);
-            case "Life Steal" -> lifeSteal(attacker, defender);
+            case "Dash" -> dash(attacker, defender, mult);
+            case "Heal" -> heal(attacker, defender, mult);
+            case "Necromancer" -> necromancer(attacker, defender, mult);
+            case "Life Steal" -> lifeSteal(attacker, defender, mult);
 
             // Warrior cases
-            case "Slash" -> slash(attacker, defender);
-            case "Swing" -> swing(attacker, defender);
-            case "Inspire" -> inspire(attacker, defender);
-            case "Cleave" -> cleave(attacker, defender);
+            case "Slash" -> slash(attacker, defender, mult);
+            case "Swing" -> swing(attacker, defender, mult);
+            case "Inspire" -> inspire(attacker, defender, mult);
+            case "Cleave" -> cleave(attacker, defender, mult);
 
             // Mage cases
-            case "Support" -> support(attacker, defender);
-            case "Fireball" -> fireball(attacker, defender);
-            case "Magic Blast" -> magicBlast(attacker, defender);
-            case "Thunder" -> thunder(attacker, defender);
+            case "Support" -> support(attacker, defender, mult);
+            case "Fireball" -> fireball(attacker, defender, mult);
+            case "Magic Blast" -> magicBlast(attacker, defender, mult);
+            case "Thunder" -> thunder(attacker, defender, mult);
 
             // King cases
-            case "Jab" -> jab(attacker, defender);
-            case "Hook" -> hook(attacker, defender);
-            case "Straight" -> straight(attacker, defender);
+            case "Jab" -> jab(attacker, defender, mult);
+            case "Hook" -> hook(attacker, defender, mult);
+            case "Straight" -> straight(attacker, defender, mult);
 
             // Special cases
             case "Tank Revive" -> revive(drawn, attacker, defender);
             case "Warrior Revive" -> revive(drawn, attacker, defender);
             case "Mage Revive" -> revive(drawn, attacker, defender);
-            case "Joker" -> joker(attacker, defender);
+            // case "Joker" -> joker(attacker, defender);
         }
     }
 
     // ─────────────── TANK ─────────────────────────────────────────────────────────────────────
-    public static void dash(Player attacker, Player defender) {
+    public static void dash(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Tank")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Dash! 1 dmg");
-        damageFirstInLine(defender, 1);
+        System.out.println("Dash! " + (1 * mult) + " dmg");
+        damageFirstInLine(defender, 1 * mult);
     }
 
-    public static void heal(Player attacker, Player defender) {
+    public static void heal(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Tank")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Heal! restore 1 hp to itself");
+        System.out.println("Heal! restore " + (1 * mult) + " hp to itself");
         for (Troop t : attacker.squad) {
             if (t.name.equals("Tank") && t.isAlive()) {
-                t.health = Math.min(MAX_HEALTH, t.health + 1);
+                t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
                 System.out.println("Tank HP: " + t.health);
                 return;
             }
         }
     }
 
-    public static void lifeSteal(Player attacker, Player defender) {
+    public static void lifeSteal(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Tank")) {
             System.out.println("Troop is dead, turn skipped!");
@@ -117,10 +135,10 @@ public class CardEffects {
 
         // steal the 1 hp
         if (target != null && tank != null) {
-            target.takeDamage(1);
-            tank.health = Math.min(MAX_HEALTH, tank.health + 1);
-            System.out.println(target.name + " lost 1 HP! HP: " + target.health);
-            System.out.println("Tank gained 1 HP! HP: " + tank.health);
+            target.takeDamage(1 * mult);
+            tank.health = Math.min(MAX_HEALTH, tank.health + (1 * mult));
+            System.out.println(target.name + " lost " + (1 * mult) + " HP! HP: " + target.health);
+            System.out.println("Tank gained " + (1 * mult) + " HP! HP: " + tank.health);
         } else if (target == null) {
             System.out.println("No enemy troops!");
         } else {
@@ -128,7 +146,7 @@ public class CardEffects {
         }
     }
 
-    public static void necromancer(Player attacker, Player defender) {
+    public static void necromancer(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Tank")) {
             System.out.println("Troop is dead, turn skipped!");
@@ -136,69 +154,72 @@ public class CardEffects {
         }
         // effect
         System.out.println("Necromancer! spawns foot soldier");
-        Troop soldier = new Troop("Soldier", 1);
 
-        // find index of Tank and insert Soldier in front
-        for (int i = 0; i < attacker.squad.size(); i++) {
-            if (attacker.squad.get(i).name.equals("Tank") && attacker.squad.get(i).isAlive()) {
-                attacker.squad.add(i, soldier); // shifts index to the right
-                System.out.println("A soldier with 1 hp gets in front!");
-                return;
+        for (int i = 0; i < mult; i++) {
+            Troop soldier = new Troop("Soldier", 1);
+            // find index of Tank and insert Soldier in front
+            for (int j = 0; j < attacker.squad.size(); j++) {
+                if (attacker.squad.get(j).name.equals("Tank") && attacker.squad.get(j).isAlive()) {
+                    attacker.squad.add(j, soldier); // shifts index to the right
+                    System.out.println("A soldier with 1 hp gets in front!");
+                    return;
+                }
             }
         }
     }
 
     // ─────────────── WARRIOR ─────────────────────────────────────────────────────────────────────
-    public static void slash(Player attacker, Player defender) {
+    public static void slash(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Warrior")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Slash! 2 dmg");
-        damageFirstInLine(defender, 2);
+        System.out.println("Slash! " + (2 * mult) + " dmg");
+        damageFirstInLine(defender, 2 * mult);
     }
 
-    public static void cleave(Player attacker, Player defender) {
+    public static void cleave(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Warrior")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Cleave! 2 dmg");
-        damageFirstInLine(defender, 4);
+        System.out.println("Cleave! " + (4 * mult) + " dmg");
+        damageFirstInLine(defender, 4 * mult);
     }
 
-    public static void swing(Player attacker, Player defender) {
+    public static void swing(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Warrior")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Swing! 1 dmg to first 2 enemies in line");
+        System.out.println("Swing! " + (1 * mult) + " dmg to first 2 enemies in line");
         int hits = 0; // to count 2 hits
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
-                t.takeDamage(1);
-                System.out.println(t.name + " took 1 damage! HP: " + t.health);
+                t.takeDamage(1 * mult);
+                System.out.println(t.name + " took " + (1 * mult) + " damage! HP: " + t.health);
                 hits++;
                 if (hits >= 2) {return;} // stops after hitting 2 troops
             }
         }
     }
 
-    public static void inspire(Player attacker, Player defender) {
+    public static void inspire(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Warrior")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Inspire! draw 2");
-        for (int i = 0; i < 2; i++) {
+        int cardsToDraw = 2 * mult;
+        System.out.println("Inspire! draw " + cardsToDraw);
+        for (int i = 0; i < cardsToDraw; i++) {
             if (!MainQuadField.deck.isEmpty()) {
                 Card drawn = MainQuadField.deck.draw();
                 System.out.println(attacker.name + " drew " + drawn.name);
@@ -211,44 +232,44 @@ public class CardEffects {
     }
 
     // ─────────────── MAGE ─────────────────────────────────────────────────────────────────────
-    public static void magicBlast(Player attacker, Player defender) {
+    public static void magicBlast(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Mage")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Magic Blast! 2 dmg");
-        damageFirstInLine(defender, 3);
+        System.out.println("Magic Blast! " + (3 * mult) + " dmg");
+        damageFirstInLine(defender, 3 * mult);
     }
 
-    public static void thunder(Player attacker, Player defender) {
+    public static void thunder(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Mage")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Thunder! 1 dmg to every troop");
+        System.out.println("Thunder! " + (1 * mult) + " dmg to every troop");
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
-                t.takeDamage(1);
-                System.out.println(t.name + " took " + 1 + " damage! HP: " + t.health);
+                t.takeDamage(1 * mult);
+                System.out.println(t.name + " took " + (1 * mult) + " damage! HP: " + t.health);
             }
         }
     }
 
-    public static void support(Player attacker, Player defender) {
+    public static void support(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Mage")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Support! heal 1 hp to a troop");
+        System.out.println("Support! heal " + (1 * mult) + " hp to a troop");
         for (Troop t : attacker.squad) {
             if (t.isAlive() && !t.name.equals("Mage")) {
-                t.health = Math.min(MAX_HEALTH, t.health + 1);
+                t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
                 System.out.println(t.name + " was healed! HP: " + t.health);
                 return;
             }
@@ -256,14 +277,14 @@ public class CardEffects {
         System.out.println("No troop to heal!");
     }
 
-    public static void fireball(Player attacker, Player defender) {
+    public static void fireball(Player attacker, Player defender, int mult) {
         // check
         if (!isTroopAlive(attacker, "Mage")) {
             System.out.println("Troop is dead, turn skipped!");
             return;
         }
         // effect
-        System.out.println("Fireball! 1 dmg to second enemy in line");
+        System.out.println("Fireball! " + (1 * mult) + " dmg to second enemy in line");
 
         // collecting list of all alive troop currently
         ArrayList<Troop> aliveTroops = new ArrayList<>();
@@ -274,31 +295,31 @@ public class CardEffects {
         }
 
         if (aliveTroops.size() >= 2) { // checks if there are more than 2 troops
-            aliveTroops.get(1).takeDamage(1);
-            System.out.println(aliveTroops.get(1).name + " took 1 damage! HP: " + aliveTroops.get(1).health);
+            aliveTroops.get(1).takeDamage(1 * mult);
+            System.out.println(aliveTroops.get(1).name + " took " + (1 * mult) +" damage! HP: " + aliveTroops.get(1).health);
 
         } else if (aliveTroops.size() == 1) { // only king left
-            aliveTroops.get(0).takeDamage(1);
-            System.out.println(aliveTroops.get(0).name + " took 1 damage! HP: " + aliveTroops.get(0).health);
+            aliveTroops.get(0).takeDamage(1 * mult);
+            System.out.println(aliveTroops.get(0).name + " took " + (1 * mult) + " damage! HP: " + aliveTroops.get(0).health);
         } else {
             System.out.println("No troops left!");
         }
     }
 
     // ─────────────── KING ─────────────────────────────────────────────────────────────────────
-    public static void jab(Player attacker, Player defender) {
-        System.out.println("Jab! 1 dmg");
-        damageFirstInLine(defender, 1);
+    public static void jab(Player attacker, Player defender, int mult) {
+        System.out.println("Jab! " + (1 * mult) + " dmg");
+        damageFirstInLine(defender, 1 * mult);
     }
 
-    public static void hook(Player attacker, Player defender) {
-        System.out.println("Hook! 2 dmg");
-        damageFirstInLine(defender, 2);
+    public static void hook(Player attacker, Player defender, int mult) {
+        System.out.println("Hook! " + (2 * mult) + " dmg");
+        damageFirstInLine(defender, 2 * mult);
     }
 
-    public static void straight(Player attacker, Player defender) {
-        System.out.println("Straight! 3 dmg");
-        damageFirstInLine(defender, 3);
+    public static void straight(Player attacker, Player defender, int mult) {
+        System.out.println("Straight! " + (3 * mult) + " dmg");
+        damageFirstInLine(defender, 3 * mult);
     }
 
     // ─────────────── SPECIAL ─────────────────────────────────────────────────────────────────────
@@ -361,12 +382,6 @@ public class CardEffects {
         }
     }
 
-    // currently same as Dash, subject to change
-    public static void joker(Player attacker, Player defender) {
-        // effect
-        System.out.println("Dash! 1 dmg");
-        damageFirstInLine(defender, 1);
-    }
 
 
 

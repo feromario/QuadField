@@ -94,4 +94,4 @@ public class MainQuadField {
 }
 
 
-// TODO: joker method, improve display again, test gameplay, gui, executable
+// TODO: improve display again, test gameplay, gui, executable
