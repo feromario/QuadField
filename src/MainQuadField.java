@@ -1,3 +1,4 @@
+// ***************************************** Imports ************************************************
 import java.awt.*;
 import java.util.Scanner;
 import javax.swing.JFrame;
@@ -14,15 +15,49 @@ import java.awt.FlowLayout;
 
 public class MainQuadField {
 
-    // Creating instances
-    static Scanner scan = new Scanner(System.in);
+    // ************************************** Main instances *******************************************
+    static Scanner scan            = new Scanner(System.in);
     static Player player1;
     static Player player2;
-    static JTextArea battleLog = new JTextArea();
-    static Deck deck = new Deck();
-    static boolean isPlayer1Turn = true;
+    static JTextArea battleLog     = new JTextArea();
+    static Deck deck               = new Deck();
+    static boolean isPlayer1Turn   = true;
 
-    // Turn logic and game loop, no longer needed
+    // *********************************** North zone instances ****************************************
+    static JPanel gamePanel        = new JPanel(new BorderLayout());
+    static JLabel turnLabel        = new JLabel("", JLabel.CENTER);
+
+    // *********************************** West zone instances *****************************************
+    static JLabel p1NameLabel      = new JLabel();
+    static JLabel p1TankLabel      = new JLabel();
+    static JLabel p1WarriorLabel   = new JLabel();
+    static JLabel p1MageLabel      = new JLabel();
+    static JLabel p1KingLabel      = new JLabel();
+    static JLabel p1TankRevive     = new JLabel();
+    static JLabel p1WarriorRevive  = new JLabel();
+    static JLabel p1MageRevive     = new JLabel();
+
+    // *********************************** East zone instances *****************************************
+    static JLabel p2NameLabel      = new JLabel();
+    static JLabel p2TankLabel      = new JLabel();
+    static JLabel p2WarriorLabel   = new JLabel();
+    static JLabel p2MageLabel      = new JLabel();
+    static JLabel p2KingLabel      = new JLabel();
+    static JLabel p2TankRevive     = new JLabel();
+    static JLabel p2WarriorRevive  = new JLabel();
+    static JLabel p2MageRevive     = new JLabel();
+
+    // *********************************** Center zone instances *****************************************
+    // n/a
+
+    // *********************************** South zone instances *****************************************
+    static JLabel deckSizeLabel    = new JLabel();
+
+
+
+
+    // *************************************** gameLoop() ***********************************************
+    // Deals with turn logic (CONSOLE)
     public static void gameLoop() {
 
         // Runs while isGamesOver is false
@@ -40,7 +75,8 @@ public class MainQuadField {
         System.out.println("Game Over");
     }
 
-    // Display
+    // ************************************* printStatus() ***********************************************
+    // Displays results (CONSOLE)
     public static void printStatus() {
         System.out.println("─".repeat(30));
         for (int i = 0; i < 2; i++) {
@@ -57,7 +93,8 @@ public class MainQuadField {
         }
     }
 
-    // What happens in a turn, helper method
+    // ************************************* takeTurn() *************************************************
+    // Draws card from deck and calls applyEffecy() (HELPER)
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
         System.out.println(attacker.name + " drew: " + drawn.name);
@@ -72,7 +109,8 @@ public class MainQuadField {
 
     }
 
-    // calculate hp differential at the end of the game
+    // *************************************** calcHPD() **********************************************
+    // Calculates health difference at end of game (HELPER)
     public static int calcHPD(Player winner, Player loser) {
         int winnerHP = 0;
         int loserHP = 0;
@@ -89,7 +127,8 @@ public class MainQuadField {
         return HPD;
     }
 
-    // Game end method
+    // *************************************** isGameOver() ******************************************
+    // Calls isGameOver() method from Player class (HELPER)
     public static boolean isGameOver() {
         // shows winner and hpd
         if (player1.isGameOver()) {
@@ -110,73 +149,104 @@ public class MainQuadField {
         }
     }
 
-    // ----- SWING GUI ----------------------------------------------------------------------------
+    // #################################### SWING GUI METHODS #########################################
     // JFrame - main window
     // JPanel - container that holds other components
     // JLabel - displays text
     // JButton - a clickable button
     // JTextField - text input box
 
+    // ************************************ updateDisplay() ********************************************
+    // Displays updated label values (SWING)
+    public static void updateDisplay() {
+        updateTroopLabels(player1, p1TankLabel, p1WarriorLabel, p1MageLabel, p1KingLabel);
+        updateTroopLabels(player2, p2TankLabel, p2WarriorLabel, p2MageLabel, p2KingLabel);
 
+        p1TankRevive.setText("Tank Revive: " + countReviveCards(player1, "Tank Revive"));
+        p1WarriorRevive.setText("Warrior Revive: " + countReviveCards(player1, "Warrior Revive"));
+        p1MageRevive.setText("Mage Revive: " + countReviveCards(player1, "Mage Revive"));
+        p2TankRevive.setText("Tank Revive: " + countReviveCards(player2, "Tank Revive"));
+        p2WarriorRevive.setText("Warrior Revive: " + countReviveCards(player2, "Warrior Revive"));
+        p2MageRevive.setText("Mage Revive: " + countReviveCards(player2, "Mage Revive"));
 
-    // --------------------------------------------------------------------------------------------
+        gamePanel.revalidate();
+        gamePanel.repaint();
+    }
 
-    // Main method
+    // ********************************** updateTroopLabels() ****************************************
+    // Updates troop labels (HELPER)
+    private static void updateTroopLabels(Player player, JLabel tankLabel, JLabel warriorLabel, JLabel mageLabel, JLabel kingLabel) {
+        for (Troop t : player.squad) {
+            switch (t.name) {
+                case "Tank"    -> tankLabel.setText("Tank: " + getTroopStatus(t));
+                case "Warrior" -> warriorLabel.setText("Warrior: " + getTroopStatus(t));
+                case "Mage"    -> mageLabel.setText("Mage: " + getTroopStatus(t));
+                case "King"    -> kingLabel.setText("King: " + getTroopStatus(t));
+            }
+        }
+    }
+
+    // ********************************* countReviveCards() *****************************************
+    // Keeps count of revive cards (HELPER)
+    private static int countReviveCards(Player player, String cardName) {
+        int count = 0;
+        for (Card c : player.hand) {
+            if (c.name.equals(cardName)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    // ********************************** getTroopStatus() *******************************************
+    // Returns health of the troop in its parameter (HELPER)
+    private static String getTroopStatus(Troop t) {
+        if (t.isAlive()) {
+            return t.health + "";
+        } else {
+            return "Dead";
+        }
+    }
+
+    // ##################################### Main method #################################################
     public static void main(String[] args) {
-
-        // ----- SWING GUI ------------------------------------------------------------------------
+        // ##################################### SWING GUI ##############################################
+        // ------------------------------------ Frame --------------------------------------------------
         JFrame frame = new JFrame("Quad Field");
         frame.setSize(800, 600); // width x height
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close program with window
-
-        // Container
         JPanel panel = new JPanel();
 
-        // Player 1
+        // --------------------------------------- Players ----------------------------------------------
         JLabel label1 = new JLabel("Player 1 name:");
         JTextField field1 = new JTextField(15); // 15 is the character width
 
-        // Player 1
         JLabel label2 = new JLabel("Player 2 name:");
         JTextField field2 = new JTextField(15); // 15 is the character width
 
         JButton startButton = new JButton("Start Game");
 
-        // add all elements to the panel
+        // ------------------------------------ Panel elements -----------------------------------------
         panel.add(label1);
         panel.add(field1);
         panel.add(label2);
         panel.add(field2);
-        panel.add(startButton);
 
-        // add the panel to the frame
+        panel.add(startButton);
         frame.add(panel);
         frame.setVisible(true);
 
-        // ------ Game Board -----------------------------
-        // NORTH Section - Player's turn
-        JPanel gamePanel = new JPanel(new BorderLayout()); // makes it possible to use zones
-        JLabel turnLabel = new JLabel("", JLabel.CENTER);
+        // ------------------------------------- Game board ---------------------------------------------
+        // ______________________________________ NORTH _________________________________________________
+        // Keep track on whose turn it is
         turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
         gamePanel.add(turnLabel, BorderLayout.NORTH);
 
-        // WEST Section - Player 1's squad and hand
+        // ________________________________________ WEST _________________________________________________
+        // Display player 1's troops and hand
         JPanel player1Panel = new JPanel();
         player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
-        JLabel p1NameLabel = new JLabel(label1.getText());
 
-        // troop labels
-        JLabel p1TankLabel = new JLabel("Tank: ");
-        JLabel p1WarriorLabel = new JLabel("Warrior: ");
-        JLabel p1MageLabel = new JLabel("Mage: ");
-        JLabel p1KingLabel = new JLabel("King: ");
-
-        // hand labels
-        JLabel p1TankRevive = new JLabel("Tank Revive: 0");
-        JLabel p1WarriorRevive = new JLabel("Warrior Revive: 0");
-        JLabel p1MageRevive = new JLabel("Mage Revive: 0");
-
-        // add to panel
         player1Panel.add(p1NameLabel);
         player1Panel.add(p1TankLabel);
         player1Panel.add(p1WarriorLabel);
@@ -190,23 +260,11 @@ public class MainQuadField {
 
         gamePanel.add(player1Panel, BorderLayout.WEST);
 
-        // WEST Section - Player 2's squad and hand
+        // __________________________________________ EAST ______________________________________________
+        // Display player 2's troops and hand
         JPanel player2Panel = new JPanel();
         player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
-        JLabel p2NameLabel = new JLabel(label2.getText());
 
-        // troop labels
-        JLabel p2TankLabel = new JLabel("Tank: ");
-        JLabel p2WarriorLabel = new JLabel("Warrior: ");
-        JLabel p2MageLabel = new JLabel("Mage: ");
-        JLabel p2KingLabel = new JLabel("King: ");
-
-        // hand labels
-        JLabel p2TankRevive = new JLabel("Tank Revive: 0");
-        JLabel p2WarriorRevive = new JLabel("Warrior Revive: 0");
-        JLabel p2MageRevive = new JLabel("Mage Revive: 0");
-
-        // add to panel
         player2Panel.add(p2NameLabel);
         player2Panel.add(p2TankLabel);
         player2Panel.add(p2WarriorLabel);
@@ -220,23 +278,24 @@ public class MainQuadField {
 
         gamePanel.add(player2Panel, BorderLayout.EAST);
 
-        // CENTER Section - battle log
+        // _______________________________________ CENTER ________________________________________________
+        // Show battle log
         battleLog.setEditable(false); // not editable
         battleLog.setLineWrap(true); // wraps around if line is too long
 
         JScrollPane scrollPane = new JScrollPane(battleLog);
         gamePanel.add(scrollPane, BorderLayout.CENTER);
 
-        // SOUTH Section - draw card and cards left
+        // ______________________________________ SOUTH _________________________________________________
+        // Houses the draw card button and shows how many cards are left
         JPanel southPanel = new JPanel(new FlowLayout()); // flowlayout - places elements horizontally
         JButton drawButton = new JButton("Draw Card");
-        JLabel deckSizeLabel = new JLabel("Cards left: 108");
 
         southPanel.add(deckSizeLabel);
         southPanel.add(drawButton);
         gamePanel.add(southPanel, BorderLayout.SOUTH);
 
-        // draw card button - calls takeTurn
+        // EVENT LISTENER FOR DRAWING CARDS
         drawButton.addActionListener(e -> {
             if (isPlayer1Turn) {
                 takeTurn(player1, player2);
@@ -253,7 +312,7 @@ public class MainQuadField {
         });
 
 
-        // Start button, getting names and creating game board
+        // EVENT LISTENER FOR STARTING GAME AND SETTING UP GAME BOARD
         startButton.addActionListener(e -> {
             // set up players
             String name1 = field1.getText();
@@ -283,27 +342,15 @@ public class MainQuadField {
             turnLabel.setText("It is " + player1.name + "'s turn.");
         });
 
-
-
-
-        // ----------------------------------------------------------------------------------------
-
-        // Get player names
+        // -------------------------------- Run game on CONSOLE ---------------------------------------
         System.out.println("Enter name of player 1: ");
         player1 = new Player(scan.nextLine());
         System.out.println("Enter name of player 2: ");
         player2 = new Player(scan.nextLine());
 
-        // Shuffle deck to start game
         deck.shuffle();
-
-        // Start game loop
         gameLoop();
-
-
-
-    }
-
+    } // ############################## END OF MAIN METHOD ##############################################
 }
 
 
