@@ -1,9 +1,12 @@
+import java.awt.*;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.Font;
+import java.awt.BorderLayout;
 
 public class MainQuadField {
 
@@ -123,6 +126,10 @@ public class MainQuadField {
         frame.setSize(800, 600); // width x height
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close program with window
 
+        // Instances
+        JPanel gamePanel = new JPanel(new BorderLayout()); // makes it possible to use zones
+        JLabel turnLabel = new JLabel("", JLabel.CENTER);
+
         // Container
         JPanel panel = new JPanel();
 
@@ -154,7 +161,18 @@ public class MainQuadField {
             player1 = new Player(name1);
             player2 = new Player(name2);
             System.out.println("Players added: " + name1 + " vs " + name2);
+
+            // switching panels
+            frame.getContentPane().removeAll(); // clear the name panel
+            frame.add(gamePanel); // add the game panel
+            frame.revalidate(); // refresh frame
+            turnLabel.setText("It is " + player1.name + "'s turn.");
         });
+
+        // ------ Game Board -----------------------------
+        // NORTH Section - Player's turn
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        gamePanel.add(turnLabel, BorderLayout.NORTH);
 
 
 
