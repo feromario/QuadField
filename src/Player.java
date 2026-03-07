@@ -20,11 +20,12 @@ public class Player {
 
     // Checks if the King troop is alive, to decide when game is over
     public boolean isGameOver() {
-        if (!squad.get(3).isAlive()) {
-            return true;
-        } else {
-            return false;
+        for (Troop t : squad) {
+            if (t.name.equals("King") && !t.isAlive()) {
+                return true;
+            }
         }
+        return false;
     }
 
 }
