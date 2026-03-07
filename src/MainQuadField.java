@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.BoxLayout;
 import java.awt.Font;
 import java.awt.BorderLayout;
 
@@ -126,10 +127,6 @@ public class MainQuadField {
         frame.setSize(800, 600); // width x height
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close program with window
 
-        // Instances
-        JPanel gamePanel = new JPanel(new BorderLayout()); // makes it possible to use zones
-        JLabel turnLabel = new JLabel("", JLabel.CENTER);
-
         // Container
         JPanel panel = new JPanel();
 
@@ -154,13 +151,59 @@ public class MainQuadField {
         frame.add(panel);
         frame.setVisible(true);
 
-        // Creating players
+        // ------ Game Board -----------------------------
+        // NORTH Section - Player's turn
+        JPanel gamePanel = new JPanel(new BorderLayout()); // makes it possible to use zones
+        JLabel turnLabel = new JLabel("", JLabel.CENTER);
+        turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        gamePanel.add(turnLabel, BorderLayout.NORTH);
+
+        // WEST Section - Player 1's squad and hand
+        JPanel player1Panel = new JPanel();
+        player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
+        JLabel p1NameLabel = new JLabel(label1.getText());
+
+        // troop labels
+        JLabel p1TankLabel = new JLabel("Tank: ");
+        JLabel p1WarriorLabel = new JLabel("Warrior: ");
+        JLabel p1MageLabel = new JLabel("Mage: ");
+        JLabel p1KingLabel = new JLabel("King: ");
+
+        // hand labels
+        JLabel p1TankRevive = new JLabel("Tank Revive: 0");
+        JLabel p1WarriorRevive = new JLabel("Warrior Revive: 0");
+        JLabel p1MageRevive = new JLabel("Mage Revive: 0");
+
+        // add to panel
+        player1Panel.add(p1NameLabel);
+        player1Panel.add(p1TankLabel);
+        player1Panel.add(p1WarriorLabel);
+        player1Panel.add(p1MageLabel);
+        player1Panel.add(p1KingLabel);
+        player1Panel.add(new JLabel("-----------------"));
+        player1Panel.add(new JLabel("Hand: "));
+        player1Panel.add(p1TankRevive);
+        player1Panel.add(p1WarriorRevive);
+        player1Panel.add(p1MageRevive);
+
+        gamePanel.add(player1Panel, BorderLayout.WEST);
+
+
+        // Start button, getting names and creating game board
         startButton.addActionListener(e -> {
+            // set up players
             String name1 = field1.getText();
             String name2 = field2.getText();
             player1 = new Player(name1);
             player2 = new Player(name2);
             System.out.println("Players added: " + name1 + " vs " + name2);
+
+            // update player 1 labels
+            p1NameLabel.setText(player1.name);
+            p1TankLabel.setText("Tank: " + player1.squad.get(0).health);
+            p1WarriorLabel.setText("Warrior: " + player1.squad.get(1).health);
+            p1MageLabel.setText("Mage: " + player1.squad.get(2).health);
+            p1KingLabel.setText("King: " + player1.squad.get(3).health);
 
             // switching panels
             frame.getContentPane().removeAll(); // clear the name panel
@@ -168,11 +211,6 @@ public class MainQuadField {
             frame.revalidate(); // refresh frame
             turnLabel.setText("It is " + player1.name + "'s turn.");
         });
-
-        // ------ Game Board -----------------------------
-        // NORTH Section - Player's turn
-        turnLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        gamePanel.add(turnLabel, BorderLayout.NORTH);
 
 
 
