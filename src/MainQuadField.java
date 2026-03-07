@@ -188,6 +188,36 @@ public class MainQuadField {
 
         gamePanel.add(player1Panel, BorderLayout.WEST);
 
+        // WEST Section - Player 2's squad and hand
+        JPanel player2Panel = new JPanel();
+        player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
+        JLabel p2NameLabel = new JLabel(label2.getText());
+
+        // troop labels
+        JLabel p2TankLabel = new JLabel("Tank: ");
+        JLabel p2WarriorLabel = new JLabel("Warrior: ");
+        JLabel p2MageLabel = new JLabel("Mage: ");
+        JLabel p2KingLabel = new JLabel("King: ");
+
+        // hand labels
+        JLabel p2TankRevive = new JLabel("Tank Revive: 0");
+        JLabel p2WarriorRevive = new JLabel("Warrior Revive: 0");
+        JLabel p2MageRevive = new JLabel("Mage Revive: 0");
+
+        // add to panel
+        player2Panel.add(p2NameLabel);
+        player2Panel.add(p2TankLabel);
+        player2Panel.add(p2WarriorLabel);
+        player2Panel.add(p2MageLabel);
+        player2Panel.add(p2KingLabel);
+        player2Panel.add(new JLabel("-----------------"));
+        player2Panel.add(new JLabel("Hand: "));
+        player2Panel.add(p2TankRevive);
+        player2Panel.add(p2WarriorRevive);
+        player2Panel.add(p2MageRevive);
+
+        gamePanel.add(player2Panel, BorderLayout.WEST);
+
 
         // Start button, getting names and creating game board
         startButton.addActionListener(e -> {
@@ -204,6 +234,13 @@ public class MainQuadField {
             p1WarriorLabel.setText("Warrior: " + player1.squad.get(1).health);
             p1MageLabel.setText("Mage: " + player1.squad.get(2).health);
             p1KingLabel.setText("King: " + player1.squad.get(3).health);
+
+            // update player 2 labels
+            p2NameLabel.setText(player2.name);
+            p2TankLabel.setText("Tank: " + player2.squad.get(0).health);
+            p2WarriorLabel.setText("Warrior: " + player2.squad.get(1).health);
+            p2MageLabel.setText("Mage: " + player2.squad.get(2).health);
+            p2KingLabel.setText("King: " + player2.squad.get(3).health);
 
             // switching panels
             frame.getContentPane().removeAll(); // clear the name panel
