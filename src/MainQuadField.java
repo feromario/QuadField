@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class MainQuadField {
 
@@ -118,7 +122,43 @@ public class MainQuadField {
         JFrame frame = new JFrame("Quad Field");
         frame.setSize(800, 600); // width x height
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close program with window
-        frame.setVisible(true); // shows window
+
+        // Container
+        JPanel panel = new JPanel();
+
+        // Player 1
+        JLabel label1 = new JLabel("Player 1 name:");
+        JTextField field1 = new JTextField(15); // 15 is the character width
+
+        // Player 1
+        JLabel label2 = new JLabel("Player 2 name:");
+        JTextField field2 = new JTextField(15); // 15 is the character width
+
+        JButton startButton = new JButton("Start Game");
+
+        // add all elements to the panel
+        panel.add(label1);
+        panel.add(field1);
+        panel.add(label2);
+        panel.add(field2);
+        panel.add(startButton);
+
+        // add the panel to the frame
+        frame.add(panel);
+        frame.setVisible(true);
+
+        // Creating players
+        startButton.addActionListener(e -> {
+            String name1 = field1.getText();
+            String name2 = field2.getText();
+            player1 = new Player(name1);
+            player2 = new Player(name2);
+            System.out.println("Players added: " + name1 + " vs " + name2);
+        });
+
+
+
+
         // ----------------------------------------------------------------------------------------
 
         // Get player names
