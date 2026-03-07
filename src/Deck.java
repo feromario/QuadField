@@ -10,33 +10,33 @@ public class Deck {
     public Deck() {
         this.cards = new ArrayList<>();
         // Tank cards
-        addCard("Dash", "Deal 1 DMG", 4);
-        addCard("Heal", "Heal 1 HP", 4);
-        addCard("Necromancer", "Spawn foot soldier", 2);
-        addCard("Life Steal", "Steal 1 HP", 1);
+        addCard("Dash", "Deal 1 DMG", 8);
+        addCard("Heal", "Heal 1 HP", 8);
+        addCard("Necromancer", "Spawn foot soldier", 4);
+        addCard("Life Steal", "Steal 1 HP", 2);
 
         // Warrior cards
-        addCard("Slash", "Deal 2 DMG", 4);
-        addCard("Swing", "Deal 1 DMG to first 2 in line", 4);
-        addCard("Inspire", "Draw 2 cards", 2);
-        addCard("Cleave", "Deal 4 DMG", 1);
+        addCard("Slash", "Deal 2 DMG", 8);
+        addCard("Swing", "Deal 1 DMG to first 2 in line", 8);
+        addCard("Inspire", "Draw 2 cards", 4);
+        addCard("Cleave", "Deal 4 DMG", 2);
 
         // Mage cards
-        addCard("Support", "Heal 1 HP to 1st friendly troop in line (not self)", 4);
-        addCard("Fireball", "Deal 1 DMG to 2nd in line", 4);
-        addCard("Magic Blast", "Deal 3 DMG", 2);
-        addCard("Thunder", "Deal 1 DMG to every enemy troop", 1);
+        addCard("Support", "Heal 1 HP to 1st friendly troop in line (not self)", 8);
+        addCard("Fireball", "Deal 1 DMG to 2nd in line", 8);
+        addCard("Magic Blast", "Deal 3 DMG", 4);
+        addCard("Thunder", "Deal 1 DMG to every enemy troop", 2);
 
         // King cards
-        addCard("Jab", "Deal 1 DMG", 4);
-        addCard("Hook", "Deal 2 DMG", 2);
-        addCard("Straight", "Deal 3 DMG", 1);
+        addCard("Jab", "Deal 1 DMG", 8);
+        addCard("Hook", "Deal 2 DMG", 4);
+        addCard("Straight", "Deal 3 DMG", 2);
 
         // Special cards
-        addCard("Tank Revive", "Revive the Tank", 4);
-        addCard("Warrior Revive", "Revive the Warrior", 4);
-        addCard("Mage Revive", "Revive the Mage", 4);
-        addCard("Joker", "Double effect of next card", 2);
+        addCard("Tank Revive", "Revive the Tank", 8);
+        addCard("Warrior Revive", "Revive the Warrior", 8);
+        addCard("Mage Revive", "Revive the Mage", 8);
+        addCard("Joker", "Double effect of next card", 4);
 
     }
 
