@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 public class MainQuadField {
 
@@ -19,12 +20,10 @@ public class MainQuadField {
     static Player player2;
     static JTextArea battleLog = new JTextArea();
     static Deck deck = new Deck();
+    static boolean isPlayer1Turn = true;
 
-    // Turn logic and game loop
+    // Turn logic and game loop, no longer needed
     public static void gameLoop() {
-
-        // Player 1 starts the game
-        boolean isPlayer1Turn = true;
 
         // Runs while isGamesOver is false
         while (!isGameOver()) {
@@ -227,6 +226,31 @@ public class MainQuadField {
 
         JScrollPane scrollPane = new JScrollPane(battleLog);
         gamePanel.add(scrollPane, BorderLayout.CENTER);
+
+        // SOUTH Section - draw card and cards left
+        JPanel southPanel = new JPanel(new FlowLayout()); // flowlayout - places elements horizontally
+        JButton drawButton = new JButton("Draw Card");
+        JLabel deckSizeLabel = new JLabel("Cards left: 108");
+
+        southPanel.add(deckSizeLabel);
+        southPanel.add(drawButton);
+        gamePanel.add(southPanel, BorderLayout.SOUTH);
+
+        // draw card button - calls takeTurn
+        drawButton.addActionListener(e -> {
+            if (isPlayer1Turn) {
+                takeTurn(player1, player2);
+            } else {
+                takeTurn(player2, player1);
+            }
+
+            // update deck size label
+            deckSizeLabel.setText("Cards left: " + deck.size());
+
+            // switch turns
+            isPlayer1Turn = !isPlayer1Turn;
+            turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
+        });
 
 
         // Start button, getting names and creating game board
