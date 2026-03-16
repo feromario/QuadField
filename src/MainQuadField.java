@@ -30,6 +30,7 @@ public class MainQuadField {
 
     // *********************************** West zone instances *****************************************
     static JLabel p1NameLabel      = new JLabel();
+    static JLabel p1SoldierLabel   = new JLabel();
     static JLabel p1TankLabel      = new JLabel();
     static JLabel p1WarriorLabel   = new JLabel();
     static JLabel p1MageLabel      = new JLabel();
@@ -40,6 +41,7 @@ public class MainQuadField {
 
     // *********************************** East zone instances *****************************************
     static JLabel p2NameLabel      = new JLabel();
+    static JLabel p2SoldierLabel   = new JLabel();
     static JLabel p2TankLabel      = new JLabel();
     static JLabel p2WarriorLabel   = new JLabel();
     static JLabel p2MageLabel      = new JLabel();
@@ -173,8 +175,8 @@ public class MainQuadField {
     // ************************************ updateDisplay() ********************************************
     // Displays updated label values (SWING)
     public static void updateDisplay() {
-        updateTroopLabels(player1, p1TankLabel, p1WarriorLabel, p1MageLabel, p1KingLabel);
-        updateTroopLabels(player2, p2TankLabel, p2WarriorLabel, p2MageLabel, p2KingLabel);
+        updateTroopLabels(player1, p1SoldierLabel, p1TankLabel, p1WarriorLabel, p1MageLabel, p1KingLabel);
+        updateTroopLabels(player2, p2SoldierLabel, p2TankLabel, p2WarriorLabel, p2MageLabel, p2KingLabel);
 
         p1TankRevive.setText("Tank Revive: " + countReviveCards(player1, "Tank Revive"));
         p1WarriorRevive.setText("Warrior Revive: " + countReviveCards(player1, "Warrior Revive"));
@@ -189,14 +191,22 @@ public class MainQuadField {
 
     // ********************************** updateTroopLabels() ****************************************
     // Updates troop labels (HELPER)
-    private static void updateTroopLabels(Player player, JLabel tankLabel, JLabel warriorLabel, JLabel mageLabel, JLabel kingLabel) {
+    private static void updateTroopLabels(Player player, JLabel soldierLabel, JLabel tankLabel, JLabel warriorLabel, JLabel mageLabel, JLabel kingLabel) {
+        int soldierCount = 0;
         for (Troop t : player.squad) {
             switch (t.name) {
+                case "Soldier" -> { if (t.isAlive()) soldierCount++; }
                 case "Tank"    -> tankLabel.setText("Tank: " + getTroopStatus(t));
                 case "Warrior" -> warriorLabel.setText("Warrior: " + getTroopStatus(t));
                 case "Mage"    -> mageLabel.setText("Mage: " + getTroopStatus(t));
                 case "King"    -> kingLabel.setText("King: " + getTroopStatus(t));
             }
+        }
+
+        if  (soldierCount > 0) {
+            soldierLabel.setText("Soldier x" + soldierCount);
+        } else  {
+            soldierLabel.setText("");
         }
     }
 
@@ -263,6 +273,7 @@ public class MainQuadField {
         player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
 
         player1Panel.add(p1NameLabel);
+        player1Panel.add(p1SoldierLabel);
         player1Panel.add(p1TankLabel);
         player1Panel.add(p1WarriorLabel);
         player1Panel.add(p1MageLabel);
@@ -281,6 +292,7 @@ public class MainQuadField {
         player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
 
         player2Panel.add(p2NameLabel);
+        player2Panel.add(p2SoldierLabel);
         player2Panel.add(p2TankLabel);
         player2Panel.add(p2WarriorLabel);
         player2Panel.add(p2MageLabel);
