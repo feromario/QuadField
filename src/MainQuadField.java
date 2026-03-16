@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.SwingWorker;
+import javax.swing.SwingUtilities;
 
 public class MainQuadField {
 
@@ -24,6 +25,7 @@ public class MainQuadField {
     static Deck deck               = new Deck();
     static boolean isPlayer1Turn   = true;
     static int round               = 1;
+    static StringBuilder logBuffer = new StringBuilder();
 
     // *********************************** North zone instances ****************************************
     static JPanel gamePanel        = new JPanel(new BorderLayout());
@@ -349,6 +351,8 @@ public class MainQuadField {
 
                 @Override
                 protected void done() {
+                    battleLog.append(logBuffer.toString());
+                    logBuffer.setLength(0); // clear the buffer
                     deckSizeLabel.setText("Cards left: " + deck.size());
                     isPlayer1Turn = !isPlayer1Turn;
                     turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
