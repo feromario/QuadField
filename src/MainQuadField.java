@@ -330,21 +330,6 @@ public class MainQuadField {
         southPanel.add(deckSizeLabel);
         southPanel.add(drawButton);
 
-        // debug button
-        JButton cheatButton = new JButton("Spawn 2 Soldiers");
-        cheatButton.addActionListener(e -> {
-            CardEffects.necromancer(player1, player2, 1);
-            CardEffects.necromancer(player1, player2, 1);
-            updateDisplay();
-        });
-        southPanel.add(cheatButton);
-        JButton swingButton = new JButton("Test Swing");
-        swingButton.addActionListener(e -> {
-            CardEffects.swing(player2, player1, 1);
-            updateDisplay();
-        });
-        southPanel.add(swingButton);
-
         gamePanel.add(southPanel, BorderLayout.SOUTH);
 
         // EVENT LISTENER FOR DRAWING CARDS
@@ -418,4 +403,3 @@ public class MainQuadField {
 
 // TODO: gui, executable
 // Bugs: support method should ignore soldiers and heal troop behind
-// Bugs: when 2 soldiers present, after swing gets called, somehow 1 solder is left alive

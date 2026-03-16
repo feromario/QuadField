@@ -298,7 +298,7 @@ public class CardEffects {
             MainQuadField.battleLog.append("Joker! Heal doubled.");
         }
         for (Troop t : attacker.squad) {
-            if (t.isAlive() && !t.name.equals("Mage")) {
+            if (t.isAlive() && !t.name.equals("Mage") && !t.name.equals("Soldier")) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
                 MainQuadField.battleLog.append(attacker.name + "'s " + t.name + " was healed!");
                 return;
