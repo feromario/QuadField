@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import javax.swing.SwingWorker;
 
 public class MainQuadField {
 
@@ -324,18 +325,29 @@ public class MainQuadField {
 
         // EVENT LISTENER FOR DRAWING CARDS
         drawButton.addActionListener(e -> {
-            if (isPlayer1Turn) {
-                takeTurn(player1, player2);
-            } else {
-                takeTurn(player2, player1);
-            }
+            drawButton.setEnabled(false);
 
-            // update deck size label
-            deckSizeLabel.setText("Cards left: " + deck.size());
+            SwingWorker<Void, Void> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() {
+                    if (isPlayer1Turn) {
+                        takeTurn(player1, player2);
+                    } else {
+                        takeTurn(player2, player1);
+                    }
+                    return null;
+                }
 
-            // switch turns
-            isPlayer1Turn = !isPlayer1Turn;
-            turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
+                @Override
+                protected void done() {
+                    deckSizeLabel.setText("Cards left: " + deck.size());
+                    isPlayer1Turn = !isPlayer1Turn;
+                    turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
+                    updateDisplay();
+                    drawButton.setEnabled(true);
+                }
+            };
+            worker.execute();
         });
 
 
