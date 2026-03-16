@@ -113,6 +113,7 @@ public class MainQuadField {
         CardEffects.applyEffect(drawn, attacker, defender);
         battleLog.append("\n\n");
         battleLog.append("─".repeat(90) + "\n");
+        removeDeadSoldiers();
         round++;
         updateDisplay();
 
@@ -142,6 +143,13 @@ public class MainQuadField {
 
         int HPD = winnerHP - loserHP;
         return HPD;
+    }
+
+    // ************************************ removeDeadSoldiers() ***************************************
+    // removes dead soldiers from array
+    public static void removeDeadSoldiers() {
+        player1.squad.removeIf(t -> t.name.equals("Soldier") && !t.isAlive());
+        player2.squad.removeIf(t -> t.name.equals("Soldier") && !t.isAlive());
     }
 
     // *************************************** isGameOver() ******************************************
@@ -321,6 +329,22 @@ public class MainQuadField {
 
         southPanel.add(deckSizeLabel);
         southPanel.add(drawButton);
+
+        // debug button
+        JButton cheatButton = new JButton("Spawn 2 Soldiers");
+        cheatButton.addActionListener(e -> {
+            CardEffects.necromancer(player1, player2, 1);
+            CardEffects.necromancer(player1, player2, 1);
+            updateDisplay();
+        });
+        southPanel.add(cheatButton);
+        JButton swingButton = new JButton("Test Swing");
+        swingButton.addActionListener(e -> {
+            CardEffects.swing(player2, player1, 1);
+            updateDisplay();
+        });
+        southPanel.add(swingButton);
+
         gamePanel.add(southPanel, BorderLayout.SOUTH);
 
         // EVENT LISTENER FOR DRAWING CARDS

@@ -7,6 +7,7 @@ public class CardEffects {
     // Deal damage to first enemy in line (helper)
     private static void damageFirstInLine(Player defender, int dmg) {
         for (Troop t : defender.squad) {
+            MainQuadField.battleLog.append(t.name + " HP: " + t.health + " alive: " + t.isAlive() + "\n"); // debug
             if (t.isAlive()) {
                 t.takeDamage(dmg);
                 MainQuadField.battleLog.append(defender.name + "'s " + t.name + " took " + dmg + " damage!");
