@@ -110,7 +110,7 @@ public class MainQuadField {
         //battleLog.append("\n");
 
         CardEffects.applyEffect(drawn, attacker, defender);
-        battleLog.append("\n");
+        battleLog.append("\n\n");
         battleLog.append("─".repeat(90) + "\n");
         round++;
         updateDisplay();
@@ -381,3 +381,5 @@ public class MainQuadField {
 
 
 // TODO: gui, executable
+// Bugs: support method should ignore soldiers and heal troop behind
+// Bugs: when 2 soldiers present, after swing gets called, somehow 1 solder is left alive

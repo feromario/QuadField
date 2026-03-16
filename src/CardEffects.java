@@ -27,10 +27,10 @@ public class CardEffects {
 
     // joker card
     public static void joker(Player attacker, Player defender) {
-        //MainQuadField.battleLog.append("Joker! next card effect doubled");
+        MainQuadField.battleLog.append(attacker.name + " drew Joker!\n");
+        MainQuadField.battleLog.append("Effect: Double the effect of next card drawn.\n");
         attacker.jokerActive = true;
         Card drawn = MainQuadField.deck.draw();
-        //MainQuadField.battleLog.append("Card drawn: " + drawn.name);
         applyEffect(drawn, attacker, defender);
     }
 
@@ -91,7 +91,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 1 * mult);
@@ -104,7 +104,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if  (attacker.jokerActive) {
+        if  (mult == 2) {
             MainQuadField.battleLog.append("Joker! Heal doubled.");
         }
         for (Troop t : attacker.squad) {
@@ -123,7 +123,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Effect doubled.");
         }
 
@@ -166,7 +166,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Spawn 2 soldiers.");
         }
 
@@ -191,7 +191,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 2 * mult);
@@ -204,7 +204,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 4 * mult);
@@ -217,7 +217,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         int hits = 0; // to count 2 hits
@@ -239,7 +239,7 @@ public class CardEffects {
         }
         // effect
         int cardsToDraw = 2 * mult;
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Draw 4 cards.");
         }
         for (int i = 0; i < cardsToDraw; i++) {
@@ -262,7 +262,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 3 * mult);
@@ -275,7 +275,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         for (Troop t : defender.squad) {
@@ -293,7 +293,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Heal doubled.");
         }
         for (Troop t : attacker.squad) {
@@ -313,7 +313,7 @@ public class CardEffects {
             return;
         }
         // effect
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
 
@@ -339,21 +339,21 @@ public class CardEffects {
 
     // ─────────────── KING ─────────────────────────────────────────────────────────────────────
     public static void jab(Player attacker, Player defender, int mult) {
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 1 * mult);
     }
 
     public static void hook(Player attacker, Player defender, int mult) {
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 2 * mult);
     }
 
     public static void straight(Player attacker, Player defender, int mult) {
-        if (attacker.jokerActive) {
+        if (mult == 2) {
             MainQuadField.battleLog.append("Joker! Damage doubled.");
         }
         damageFirstInLine(defender, 3 * mult);
