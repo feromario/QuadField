@@ -172,7 +172,7 @@ public class MainQuadField {
             int HPD = calcHPD(player1, player2);
             battleLog.append("─".repeat(90) + "\n");
             battleLog.append(player1.name + " wins!\n");
-            battleLog.append("HPD: " + HPD + "\n");
+            battleLog.append("Health diff: " + HPD + "\n");
         }
     }
 
@@ -349,12 +349,13 @@ public class MainQuadField {
                         } else {
                             takeTurn(player2, player1);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {  // replace everything inside here
+                        final String error = e.toString() + " at " + e.getStackTrace()[0].toString();
                         SwingUtilities.invokeLater(() -> {
-                            MainQuadField.battleLog.append("ERROR: " + e.getMessage() + "\n");
+                            MainQuadField.logBuffer.append("CRASH: " + error + "\n");
                             drawButton.setEnabled(true);
                         });
+                        e.printStackTrace();
                     }
                     return null;
                 }
@@ -390,7 +391,7 @@ public class MainQuadField {
             String name2 = field2.getText();
             player1 = new Player(name1);
             player2 = new Player(name2);
-            System.out.println("Players added: " + name1 + " vs " + name2);
+            //System.out.println("Players added: " + name1 + " vs " + name2);
 
             // update player 1 labels
             p1NameLabel.setText(player1.name);
@@ -414,12 +415,12 @@ public class MainQuadField {
         });
 
         // -------------------------------- Run game on CONSOLE ---------------------------------------
-        System.out.println("Enter name of player 1: ");
-        player1 = new Player(scan.nextLine());
-        System.out.println("Enter name of player 2: ");
-        player2 = new Player(scan.nextLine());
+        //System.out.println("Enter name of player 1: ");
+        //player1 = new Player(scan.nextLine());
+        //System.out.println("Enter name of player 2: ");
+        //player2 = new Player(scan.nextLine());
 
-        gameLoop();
+        //gameLoop();
     } // ############################## END OF MAIN METHOD ##############################################
 }
 

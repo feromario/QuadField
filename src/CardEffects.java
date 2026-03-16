@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 // for gui: all SOP's replaced with MainQuadField.battleLog.append to add them to the battle log text area
 
 public class CardEffects {
@@ -363,7 +365,6 @@ public class CardEffects {
     public static void revive(Card drawn, Player attacker, Player defender) {
         // save the card to player's hand
         attacker.hand.add(drawn);
-        //MainQuadField.logBuffer.append(attacker.name + " drew " + drawn.name);
 
         // count how many of this revive type the player has
         int count = 0;
@@ -372,49 +373,38 @@ public class CardEffects {
                 count++;
             }
         }
-        MainQuadField.logBuffer.append(attacker.name + " has " + count + " " + drawn.name + ".");
+        MainQuadField.logBuffer.append(attacker.name + " has " + count + " " + drawn.name + ".\n");
 
         // check if player has at least 3 revives of the same type
         if (count >= 3) {
-            // which troop the revive belongs too
             String troopName = drawn.name.replace(" Revive", "");
 
             // only revive if that troop is dead
             if (!isTroopAlive(attacker, troopName)) {
-                MainQuadField.logBuffer.append("Revive " + troopName + "? y/n");
-                String input = MainQuadField.scan.nextLine();
-
-                if (input.equals("y")) {
-                    // remove those 3 cards
-                    int removed = 0;
-                    for (int i = attacker.hand.size() - 1; i >= 0 && removed < 3; i--) {
-                        if (attacker.hand.get(i).name.equals(drawn.name)) {
-                            attacker.hand.remove(i);
-                            removed++;
-                        }
+                // remove 3 cards from hand
+                int removed = 0;
+                for (int i = attacker.hand.size() - 1; i >= 0 && removed < 3; i--) {
+                    if (attacker.hand.get(i).name.equals(drawn.name)) {
+                        attacker.hand.remove(i);
+                        removed++;
                     }
-                    // revive the troop
-                    for (Troop t : attacker.squad) {
-                        if (t.name.equals(troopName)) {
-                            // decides what health to give each troop, hardcoded
-                            if (troopName.equals("Tank")) {
-                                t.health = 5;
-                            } else if (troopName.equals("Warrior")) {
-                                t.health = 4;
-                            } else if (troopName.equals("Mage")) {
-                                t.health = 3;
-                            }
-
-                            MainQuadField.logBuffer.append(troopName + " revived!");
-                            return;
+                }
+                // revive the troop
+                for (Troop t : attacker.squad) {
+                    if (t.name.equals(troopName)) {
+                        if (troopName.equals("Tank")) {
+                            t.health = 5;
+                        } else if (troopName.equals("Warrior")) {
+                            t.health = 4;
+                        } else if (troopName.equals("Mage")) {
+                            t.health = 3;
                         }
+                        MainQuadField.logBuffer.append(troopName + " has been revived!\n");
+                        return;
                     }
-
-                } else {
-                    MainQuadField.logBuffer.append("Not enough. Cards saved for later.");
                 }
             } else {
-                MainQuadField.logBuffer.append(troopName + " is alive. Cards saved for later.");
+                MainQuadField.logBuffer.append(troopName + " is alive. Cards saved for later.\n");
             }
         }
     }
