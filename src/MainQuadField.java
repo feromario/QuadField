@@ -26,6 +26,7 @@ public class MainQuadField {
     static boolean isPlayer1Turn   = true;
     static int round               = 1;
     static StringBuilder logBuffer = new StringBuilder();
+    static boolean isPlayer2FirstTurn = true;
 
     // *********************************** North zone instances ****************************************
     static JPanel gamePanel        = new JPanel(new BorderLayout());
@@ -347,9 +348,16 @@ public class MainQuadField {
                         if (isPlayer1Turn) {
                             takeTurn(player1, player2);
                         } else {
-                            takeTurn(player2, player1);
+                            if (isPlayer2FirstTurn) {
+                                // player 2 draws twice on their first turn
+                                takeTurn(player2, player1);
+                                takeTurn(player2, player1);
+                                isPlayer2FirstTurn = false;
+                            } else {
+                                takeTurn(player2, player1);
+                            }
                         }
-                    } catch (Exception e) {  // replace everything inside here
+                    } catch (Exception e) {
                         final String error = e.toString() + " at " + e.getStackTrace()[0].toString();
                         SwingUtilities.invokeLater(() -> {
                             MainQuadField.logBuffer.append("CRASH: " + error + "\n");
