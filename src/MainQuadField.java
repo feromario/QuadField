@@ -103,18 +103,18 @@ public class MainQuadField {
     // Draws card from deck and calls applyEffect() (HELPER)
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
-        battleLog.append("─".repeat(90) + "\n");
-        battleLog.append("***************\n");
-        battleLog.append("# Round " + round + "\n");
-        battleLog.append("***************\n");
+        logBuffer.append("─".repeat(90) + "\n");
+        logBuffer.append("***************\n");
+        logBuffer.append("# Round " + round + "\n");
+        logBuffer.append("***************\n");
 
         //battleLog.append(attacker.name + " drew " + drawn.name);
         //battleLog.append("\nEffect: " + drawn.effect + "\n");
         //battleLog.append("\n");
 
         CardEffects.applyEffect(drawn, attacker, defender);
-        battleLog.append("\n\n");
-        battleLog.append("─".repeat(90) + "\n");
+        logBuffer.append("\n\n");
+        logBuffer.append("─".repeat(90) + "\n");
         removeDeadSoldiers();
         round++;
         updateDisplay();

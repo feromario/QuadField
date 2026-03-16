@@ -281,9 +281,9 @@ public class CardEffects {
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
                 t.takeDamage(1 * mult);
-                MainQuadField.logBuffer.append(t.name + " took " + (1 * mult) + " damage! HP: " + t.health);
             }
         }
+        MainQuadField.logBuffer.append("All " + defender.name + "'s troops take " +  (1 * mult) + " damage!  ");
     }
 
     public static void support(Player attacker, Player defender, int mult) {
