@@ -354,6 +354,9 @@ public class MainQuadField {
                     turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
                     updateDisplay();
                     drawButton.setEnabled(true);
+
+                    // auto scroll
+                    battleLog.setCaretPosition(battleLog.getDocument().getLength());
                 }
             };
             worker.execute();
@@ -402,4 +405,3 @@ public class MainQuadField {
 
 
 // TODO: gui, executable
-// Bugs: support method should ignore soldiers and heal troop behind
