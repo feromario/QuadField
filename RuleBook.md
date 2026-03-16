@@ -2,7 +2,8 @@
 *  Autonomous 1v1 PvP  
 *  Each player has 4 troops: Tank, Warrior, Mage, King.  
 *  Players take turns drawing cards from a deck of 108 cards.  
-*  Who goes first is decided by format or coin flip.
+*  Player 1 always goes first.  
+*  Player 2 draws twice in their first turn for balancing gameplay.  
 ---
 # General rules
 *  Certain cards correlate to certain troops.
@@ -17,11 +18,10 @@
 
 Tank (T) // 5 HP  
 Warrior (W) // 4 HP  
-Mage (M) // 3HP  
+Mage (M) // 3 HP  
 King (K) // 5 HP
 ---
 # Card Stats
-_(number of cards in a deck and their abilities subject to change)_
 
 **Special cards**  
 - Revive X (24 cards)  
