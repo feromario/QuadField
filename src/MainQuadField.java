@@ -60,9 +60,6 @@ public class MainQuadField {
     // *********************************** South zone instances *****************************************
     static JLabel deckSizeLabel    = new JLabel();
 
-
-
-
     // *************************************** gameLoop() ***********************************************
     // Deals with turn logic (CONSOLE)
     public static void gameLoop() {
@@ -109,25 +106,12 @@ public class MainQuadField {
         logBuffer.append("# Round " + round + "\n");
         logBuffer.append("***************\n");
 
-        //battleLog.append(attacker.name + " drew " + drawn.name);
-        //battleLog.append("\nEffect: " + drawn.effect + "\n");
-        //battleLog.append("\n");
-
         CardEffects.applyEffect(drawn, attacker, defender);
         logBuffer.append("\n\n");
         logBuffer.append("─".repeat(90) + "\n");
         removeDeadSoldiers();
         round++;
         updateDisplay();
-
-
-        // Display after each turn
-        //printStatus();
-
-        // Pause before next turn
-        //System.out.println("Press enter for " + defender.name + "'s turn...");
-        //scan.nextLine();
-
     }
 
     // *************************************** calcHPD() **********************************************
@@ -399,7 +383,6 @@ public class MainQuadField {
             String name2 = field2.getText();
             player1 = new Player(name1);
             player2 = new Player(name2);
-            //System.out.println("Players added: " + name1 + " vs " + name2);
 
             // update player 1 labels
             p1NameLabel.setText(player1.name);
@@ -421,16 +404,5 @@ public class MainQuadField {
             frame.revalidate(); // refresh frame
             turnLabel.setText("It is " + player1.name + "'s turn.");
         });
-
-        // -------------------------------- Run game on CONSOLE ---------------------------------------
-        //System.out.println("Enter name of player 1: ");
-        //player1 = new Player(scan.nextLine());
-        //System.out.println("Enter name of player 2: ");
-        //player2 = new Player(scan.nextLine());
-
-        //gameLoop();
     } // ############################## END OF MAIN METHOD ##############################################
 }
-
-
-// TODO: gui, executable

@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-// for gui: all SOP's replaced with MainQuadField.battleLog.append to add them to the battle log text area
 
 public class CardEffects {
     private static final int MAX_HEALTH = 5;
@@ -81,7 +80,6 @@ public class CardEffects {
             case "Tank Revive" -> revive(drawn, attacker, defender);
             case "Warrior Revive" -> revive(drawn, attacker, defender);
             case "Mage Revive" -> revive(drawn, attacker, defender);
-            // case "Joker" -> joker(attacker, defender);
         }
     }
 
@@ -112,7 +110,6 @@ public class CardEffects {
         for (Troop t : attacker.squad) {
             if (t.name.equals("Tank") && t.isAlive()) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
-                //MainQuadField.logBuffer.append("Tank HP: " + t.health);
                 return;
             }
         }
@@ -152,8 +149,6 @@ public class CardEffects {
             target.takeDamage(1 * mult);
             tank.health = Math.min(MAX_HEALTH, tank.health + (1 * mult));
             MainQuadField.logBuffer.append(attacker.name + "'s Tank stole " + (1 * mult) + " hp from " + defender.name + "'s " + target.name);
-            //MainQuadField.logBuffer.append(target.name + " lost " + (1 * mult) + " HP! HP: " + target.health);
-            //MainQuadField.logBuffer.append("Tank gained " + (1 * mult) + " HP! HP: " + tank.health);
         } else if (target == null) {
             MainQuadField.logBuffer.append("No enemy troops!");
         } else {
@@ -408,10 +403,6 @@ public class CardEffects {
             }
         }
     }
-
-
-
-
 }
 
 

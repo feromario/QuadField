@@ -17,8 +17,7 @@ public class Troop {
 
     // Method for the troop to take damage
     public void takeDamage(int damage) {
-        // Math.max takes the larger of the two values
-        // in case the health goes into negatives
+        // Math.max takes the larger of the two values in case the health goes into negatives
         health = Math.max(0, health - damage);
     }
 
