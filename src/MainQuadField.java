@@ -22,6 +22,7 @@ public class MainQuadField {
     static JTextArea battleLog     = new JTextArea();
     static Deck deck               = new Deck();
     static boolean isPlayer1Turn   = true;
+    static int round               = 1;
 
     // *********************************** North zone instances ****************************************
     static JPanel gamePanel        = new JPanel(new BorderLayout());
@@ -94,17 +95,22 @@ public class MainQuadField {
     }
 
     // ************************************* takeTurn() *************************************************
-    // Draws card from deck and calls applyEffecy() (HELPER)
+    // Draws card from deck and calls applyEffect() (HELPER)
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
-        System.out.println(attacker.name + " drew: " + drawn.name);
+        battleLog.append("─".repeat(30) + "\n");
+        battleLog.append(attacker.name + " drew: " + drawn.name);
+        battleLog.append("Effect: " + drawn.effect + "\n");
         CardEffects.applyEffect(drawn, attacker, defender);
+        round++;
+        updateDisplay();
+
 
         // Display after each turn
-        printStatus();
+        //printStatus();
 
         // Pause before next turn
-        System.out.println("Press enter for " + defender.name + "'s turn...");
+        //System.out.println("Press enter for " + defender.name + "'s turn...");
         scan.nextLine();
 
     }
