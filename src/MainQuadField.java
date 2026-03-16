@@ -102,9 +102,11 @@ public class MainQuadField {
         battleLog.append("***************\n");
         battleLog.append("# Round " + round + "\n");
         battleLog.append("***************\n");
-        battleLog.append(attacker.name + " drew " + drawn.name);
-        battleLog.append("\nEffect: " + drawn.effect + "\n");
-        battleLog.append("\n");
+
+        //battleLog.append(attacker.name + " drew " + drawn.name);
+        //battleLog.append("\nEffect: " + drawn.effect + "\n");
+        //battleLog.append("\n");
+
         CardEffects.applyEffect(drawn, attacker, defender);
         battleLog.append("\n");
         battleLog.append("─".repeat(90) + "\n");

@@ -30,7 +30,7 @@ public class CardEffects {
         //MainQuadField.battleLog.append("Joker! next card effect doubled");
         attacker.jokerActive = true;
         Card drawn = MainQuadField.deck.draw();
-        MainQuadField.battleLog.append("Card drawn: " + drawn.name);
+        //MainQuadField.battleLog.append("Card drawn: " + drawn.name);
         applyEffect(drawn, attacker, defender);
     }
 
@@ -43,6 +43,11 @@ public class CardEffects {
         }
         int mult = attacker.jokerActive ? 2 : 1;
         attacker.jokerActive = false; // reset after every card draw
+
+        // log cards
+        MainQuadField.battleLog.append("\n" + attacker.name + " drew " + drawn.name);
+        MainQuadField.battleLog.append("\nEffect: " + drawn.effect + "\n");
+        MainQuadField.battleLog.append("\n");
 
         // switch to card
         switch (drawn.name) {
@@ -105,7 +110,7 @@ public class CardEffects {
         for (Troop t : attacker.squad) {
             if (t.name.equals("Tank") && t.isAlive()) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
-                MainQuadField.battleLog.append("Tank HP: " + t.health);
+                //MainQuadField.battleLog.append("Tank HP: " + t.health);
                 return;
             }
         }
@@ -240,7 +245,7 @@ public class CardEffects {
         for (int i = 0; i < cardsToDraw; i++) {
             if (!MainQuadField.deck.isEmpty()) {
                 Card drawn = MainQuadField.deck.draw();
-                MainQuadField.battleLog.append(attacker.name + " drew " + drawn.name);
+                //MainQuadField.battleLog.append(attacker.name + " drew " + drawn.name);
                 applyEffect(drawn, attacker, defender); // applies card after draw
             } else {
                 MainQuadField.battleLog.append("Deck is empty!");
