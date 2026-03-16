@@ -157,22 +157,22 @@ public class MainQuadField {
     // *************************************** isGameOver() ******************************************
     // Calls isGameOver() method from Player class (HELPER)
     public static boolean isGameOver() {
-        // shows winner and hpd
+        return player1.isGameOver() || player2.isGameOver();
+    }
+
+    // *************************************** announceWinner() ******************************************
+    // used to display winner and HPD
+    public static void announceWinner() {
         if (player1.isGameOver()) {
             int HPD = calcHPD(player2, player1);
-            System.out.println(player2.name + " wins.");
-            System.out.println("HPD: " + HPD);
+            battleLog.append("─".repeat(90) + "\n");
+            battleLog.append(player2.name + " wins!\n");
+            battleLog.append("Health diff: " + HPD + "\n");
         } else if (player2.isGameOver()) {
             int HPD = calcHPD(player1, player2);
-            System.out.println(player1.name + " wins.");
-            System.out.println("HPD: " + HPD);
-        }
-
-        // Checks whether the game is over for either player to end game loop
-        if (player1.isGameOver() || player2.isGameOver())  {
-            return true;
-        } else  {
-            return false;
+            battleLog.append("─".repeat(90) + "\n");
+            battleLog.append(player1.name + " wins!\n");
+            battleLog.append("HPD: " + HPD + "\n");
         }
     }
 
@@ -341,10 +341,20 @@ public class MainQuadField {
             SwingWorker<Void, Void> worker = new SwingWorker<>() {
                 @Override
                 protected Void doInBackground() {
-                    if (isPlayer1Turn) {
-                        takeTurn(player1, player2);
-                    } else {
-                        takeTurn(player2, player1);
+                    try {
+                        if (isGameOver()) return null;
+
+                        if (isPlayer1Turn) {
+                            takeTurn(player1, player2);
+                        } else {
+                            takeTurn(player2, player1);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        SwingUtilities.invokeLater(() -> {
+                            MainQuadField.battleLog.append("ERROR: " + e.getMessage() + "\n");
+                            drawButton.setEnabled(true);
+                        });
                     }
                     return null;
                 }
@@ -357,7 +367,13 @@ public class MainQuadField {
                     isPlayer1Turn = !isPlayer1Turn;
                     turnLabel.setText("It is " + (isPlayer1Turn ? player1.name : player2.name) + "'s turn.");
                     updateDisplay();
-                    drawButton.setEnabled(true);
+
+                    if (isGameOver()) {
+                        announceWinner();
+                        drawButton.setEnabled(false);
+                    } else {
+                        drawButton.setEnabled(true);
+                    }
 
                     // auto scroll
                     battleLog.setCaretPosition(battleLog.getDocument().getLength());
