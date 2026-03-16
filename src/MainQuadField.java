@@ -99,6 +99,9 @@ public class MainQuadField {
     public static void takeTurn(Player attacker, Player defender) {
         Card drawn = deck.draw();
         battleLog.append("─".repeat(90) + "\n");
+        battleLog.append("***************\n");
+        battleLog.append("# Round " + round + "\n");
+        battleLog.append("***************\n");
         battleLog.append(attacker.name + " drew " + drawn.name);
         battleLog.append("\nEffect: " + drawn.effect + "\n");
         battleLog.append("\n");

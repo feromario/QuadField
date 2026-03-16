@@ -27,10 +27,10 @@ public class CardEffects {
 
     // joker card
     public static void joker(Player attacker, Player defender) {
-        MainQuadField.battleLog.append("Joker! next card effect doubled");
+        //MainQuadField.battleLog.append("Joker! next card effect doubled");
         attacker.jokerActive = true;
         Card drawn = MainQuadField.deck.draw();
-        MainQuadField.battleLog.append("Drawn Card: " + drawn.name);
+        MainQuadField.battleLog.append("Card drawn: " + drawn.name);
         applyEffect(drawn, attacker, defender);
     }
 
@@ -294,7 +294,7 @@ public class CardEffects {
         for (Troop t : attacker.squad) {
             if (t.isAlive() && !t.name.equals("Mage")) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
-                MainQuadField.battleLog.append(attacker.name + "'s" + t.name + " was healed.");
+                MainQuadField.battleLog.append(attacker.name + "'s " + t.name + " was healed!");
                 return;
             }
         }
@@ -322,11 +322,11 @@ public class CardEffects {
 
         if (aliveTroops.size() >= 2) { // checks if there are more than 2 troops
             aliveTroops.get(1).takeDamage(1 * mult);
-            MainQuadField.battleLog.append(aliveTroops.get(1).name + " took " + (1 * mult) +" damage! HP: " + aliveTroops.get(1).health);
+            MainQuadField.battleLog.append(defender.name + "'s " + aliveTroops.get(1).name + " took " + (1 * mult) +" damage!");
 
         } else if (aliveTroops.size() == 1) { // only king left
             aliveTroops.get(0).takeDamage(1 * mult);
-            MainQuadField.battleLog.append(aliveTroops.get(0).name + " took " + (1 * mult) + " damage! HP: " + aliveTroops.get(0).health);
+            MainQuadField.battleLog.append(defender.name + "'s " + aliveTroops.get(0).name + " took " + (1 * mult) + " damage!");
         } else {
             MainQuadField.battleLog.append("No troops left!");
         }
@@ -367,7 +367,7 @@ public class CardEffects {
                 count++;
             }
         }
-        MainQuadField.battleLog.append(attacker.name + " has " + count + " " + drawn.name);
+        MainQuadField.battleLog.append(attacker.name + " has " + count + " " + drawn.name + ".");
 
         // check if player has at least 3 revives of the same type
         if (count >= 3) {
