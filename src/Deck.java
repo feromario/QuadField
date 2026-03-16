@@ -10,33 +10,33 @@ public class Deck {
     public Deck() {
         this.cards = new ArrayList<>();
         // Tank cards
-        addCard("Dash", "Deal 1 DMG", 8);
-        addCard("Heal", "Heal 1 HP", 8);
-        addCard("Necromancer", "Spawn foot soldier", 4);
-        addCard("Life Steal", "Steal 1 HP", 2);
+        addCard("Dash", "Tank deals 1 damage.", 8);
+        addCard("Heal", "Tank heals 1 hp.", 8);
+        addCard("Necromancer", "Tank spawns a foot soldier.", 4);
+        addCard("Life Steal", "Tank steals 1 hp from opposition.", 2);
 
         // Warrior cards
-        addCard("Slash", "Deal 2 DMG", 8);
-        addCard("Swing", "Deal 1 DMG to first 2 in line", 8);
-        addCard("Inspire", "Draw 2 cards", 4);
-        addCard("Cleave", "Deal 4 DMG", 2);
+        addCard("Slash", "Warrior deals 2 damage.", 8);
+        addCard("Swing", "Warrior deals 1 damage to first 2 enemies in line.", 8);
+        addCard("Inspire", "Warrior draws 2 cards.", 4);
+        addCard("Cleave", "Warrior deals 4 damage.", 2);
 
         // Mage cards
-        addCard("Support", "Heal 1 HP to 1st friendly troop in line (not self)", 8);
-        addCard("Fireball", "Deal 1 DMG to 2nd in line", 8);
-        addCard("Magic Blast", "Deal 3 DMG", 4);
-        addCard("Thunder", "Deal 1 DMG to every enemy troop", 2);
+        addCard("Support", "Mage heals 1 hp to 1st friendly troop in line, besides itself.", 8);
+        addCard("Fireball", "Mage deals 1 damage to 2nd enemy in line.", 8);
+        addCard("Magic Blast", "Mage deals 3 damage.", 4);
+        addCard("Thunder", "Mage deals 1 damage to every enemy troop.", 2);
 
         // King cards
-        addCard("Jab", "Deal 1 DMG", 8);
-        addCard("Hook", "Deal 2 DMG", 4);
-        addCard("Straight", "Deal 3 DMG", 2);
+        addCard("Jab", "King deals 1 damage.", 8);
+        addCard("Hook", "King deals 2 damage.", 4);
+        addCard("Straight", "King deals 3 damage.", 2);
 
         // Special cards
-        addCard("Tank Revive", "Revive the Tank", 8);
-        addCard("Warrior Revive", "Revive the Warrior", 8);
-        addCard("Mage Revive", "Revive the Mage", 8);
-        addCard("Joker", "Double effect of next card", 4);
+        addCard("Tank Revive", "Revive the Tank. (3 cards needed)", 8);
+        addCard("Warrior Revive", "Revive the Warrior. (3 cards needed)", 8);
+        addCard("Mage Revive", "Revive the Mage. (3 cards needed)", 8);
+        addCard("Joker", "Double effect of next card drawn. (not applicable to joker and revive cards)", 4);
 
     }
 

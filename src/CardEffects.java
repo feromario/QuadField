@@ -9,7 +9,7 @@ public class CardEffects {
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
                 t.takeDamage(dmg);
-                MainQuadField.battleLog.append(t.name + " took " + dmg + " damage! HP: " + t.health);
+                MainQuadField.battleLog.append(defender.name + "'s " + t.name + " took " + dmg + " damage!");
                 return; // guarantees only the first enemy in line gets hit, exits loop
             }
         }
@@ -86,7 +86,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Dash! " + (1 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 1 * mult);
     }
 
@@ -97,7 +99,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Heal! restore " + (1 * mult) + " hp to itself");
+        if  (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Heal doubled.");
+        }
         for (Troop t : attacker.squad) {
             if (t.name.equals("Tank") && t.isAlive()) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
@@ -114,7 +118,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Life Steal! steal 1hp from enemy");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Effect doubled.");
+        }
 
         // find the first alive enemy troop
         Troop target = null;
@@ -138,8 +144,9 @@ public class CardEffects {
         if (target != null && tank != null) {
             target.takeDamage(1 * mult);
             tank.health = Math.min(MAX_HEALTH, tank.health + (1 * mult));
-            MainQuadField.battleLog.append(target.name + " lost " + (1 * mult) + " HP! HP: " + target.health);
-            MainQuadField.battleLog.append("Tank gained " + (1 * mult) + " HP! HP: " + tank.health);
+            MainQuadField.battleLog.append(attacker.name + "'s Tank stole " + (1 * mult) + " hp from " + defender.name + "'s " + target.name);
+            //MainQuadField.battleLog.append(target.name + " lost " + (1 * mult) + " HP! HP: " + target.health);
+            //MainQuadField.battleLog.append("Tank gained " + (1 * mult) + " HP! HP: " + tank.health);
         } else if (target == null) {
             MainQuadField.battleLog.append("No enemy troops!");
         } else {
@@ -154,7 +161,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Necromancer! spawns foot soldier");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Spawn 2 soldiers.");
+        }
 
         for (int i = 0; i < mult; i++) {
             Troop soldier = new Troop("Soldier", 1);
@@ -177,7 +186,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Slash! " + (2 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 2 * mult);
     }
 
@@ -188,7 +199,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Cleave! " + (4 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 4 * mult);
     }
 
@@ -199,12 +212,14 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Swing! " + (1 * mult) + " dmg to first 2 enemies in line");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         int hits = 0; // to count 2 hits
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
                 t.takeDamage(1 * mult);
-                MainQuadField.battleLog.append(t.name + " took " + (1 * mult) + " damage! HP: " + t.health);
+                MainQuadField.battleLog.append(defender.name + "'s " + t.name + " took " + (1 * mult) + " damage!  ");
                 hits++;
                 if (hits >= 2) {return;} // stops after hitting 2 troops
             }
@@ -219,7 +234,9 @@ public class CardEffects {
         }
         // effect
         int cardsToDraw = 2 * mult;
-        MainQuadField.battleLog.append("Inspire! draw " + cardsToDraw);
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Draw 4 cards.");
+        }
         for (int i = 0; i < cardsToDraw; i++) {
             if (!MainQuadField.deck.isEmpty()) {
                 Card drawn = MainQuadField.deck.draw();
@@ -240,7 +257,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Magic Blast! " + (3 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 3 * mult);
     }
 
@@ -251,7 +270,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Thunder! " + (1 * mult) + " dmg to every troop");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         for (Troop t : defender.squad) {
             if (t.isAlive()) {
                 t.takeDamage(1 * mult);
@@ -267,11 +288,13 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Support! heal " + (1 * mult) + " hp to a troop");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Heal doubled.");
+        }
         for (Troop t : attacker.squad) {
             if (t.isAlive() && !t.name.equals("Mage")) {
                 t.health = Math.min(MAX_HEALTH, t.health + (1 * mult));
-                MainQuadField.battleLog.append(t.name + " was healed! HP: " + t.health);
+                MainQuadField.battleLog.append(attacker.name + "'s" + t.name + " was healed.");
                 return;
             }
         }
@@ -285,7 +308,9 @@ public class CardEffects {
             return;
         }
         // effect
-        MainQuadField.battleLog.append("Fireball! " + (1 * mult) + " dmg to second enemy in line");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
 
         // collecting list of all alive troop currently
         ArrayList<Troop> aliveTroops = new ArrayList<>();
@@ -309,17 +334,23 @@ public class CardEffects {
 
     // ─────────────── KING ─────────────────────────────────────────────────────────────────────
     public static void jab(Player attacker, Player defender, int mult) {
-        MainQuadField.battleLog.append("Jab! " + (1 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 1 * mult);
     }
 
     public static void hook(Player attacker, Player defender, int mult) {
-        MainQuadField.battleLog.append("Hook! " + (2 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 2 * mult);
     }
 
     public static void straight(Player attacker, Player defender, int mult) {
-        MainQuadField.battleLog.append("Straight! " + (3 * mult) + " dmg");
+        if (attacker.jokerActive) {
+            MainQuadField.battleLog.append("Joker! Damage doubled.");
+        }
         damageFirstInLine(defender, 3 * mult);
     }
 
@@ -327,7 +358,7 @@ public class CardEffects {
     public static void revive(Card drawn, Player attacker, Player defender) {
         // save the card to player's hand
         attacker.hand.add(drawn);
-        MainQuadField.battleLog.append(attacker.name + " drew " + drawn.name);
+        //MainQuadField.battleLog.append(attacker.name + " drew " + drawn.name);
 
         // count how many of this revive type the player has
         int count = 0;
