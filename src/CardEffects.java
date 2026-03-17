@@ -17,7 +17,7 @@ public class CardEffects {
     }
 
     // checks if a troop is alive (helper)
-    private static boolean isTroopAlive(Player player, String troopName) {
+    public static boolean isTroopAlive(Player player, String troopName) {
         for (Troop t : player.squad) {
             if (t.name.equals(troopName) && t.isAlive()) {
                 return true;

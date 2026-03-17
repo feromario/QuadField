@@ -100,6 +100,7 @@ public class MainQuadField {
     // ************************************* takeTurn() *************************************************
     // Draws card from deck and calls applyEffect() (HELPER)
     public static void takeTurn(Player attacker, Player defender) {
+        checkRevives(attacker, defender);
         Card drawn = deck.draw();
         logBuffer.append("─".repeat(90) + "\n");
         logBuffer.append("***************\n");
@@ -112,6 +113,43 @@ public class MainQuadField {
         removeDeadSoldiers();
         round++;
         updateDisplay();
+    }
+
+    // ************************************* checkRevives() *************************************************
+    // used to check if a player has 3 revive cards at the start of each round
+    public static void checkRevives(Player attacker, Player defender) {
+        String[] reviveTypes = {"Tank Revive", "Warrior Revive", "Mage Revive"};
+
+        for (String reviveType : reviveTypes) {
+            String troopName = reviveType.replace(" Revive", "");
+
+            // count how many of this revive type the player has
+            int count = 0;
+            for (Card c : attacker.hand) {
+                if (c.name.equals(reviveType)) count++;
+            }
+
+            // if 3 or more and troop is dead, revive immediately
+            if (count >= 3 && !CardEffects.isTroopAlive(attacker, troopName)) {
+                // remove 3 cards
+                int removed = 0;
+                for (int i = attacker.hand.size() - 1; i >= 0 && removed < 3; i--) {
+                    if (attacker.hand.get(i).name.equals(reviveType)) {
+                        attacker.hand.remove(i);
+                        removed++;
+                    }
+                }
+                // revive the troop
+                for (Troop t : attacker.squad) {
+                    if (t.name.equals(troopName)) {
+                        if (troopName.equals("Tank"))    t.health = 5;
+                        if (troopName.equals("Warrior")) t.health = 4;
+                        if (troopName.equals("Mage"))    t.health = 3;
+                        logBuffer.append(troopName + " has been revived from hand!\n");
+                    }
+                }
+            }
+        }
     }
 
     // *************************************** calcHPD() **********************************************
